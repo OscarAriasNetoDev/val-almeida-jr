@@ -49,7 +49,7 @@ export default function Footer() {
         <div>
           <h4>{pt ? "Horários" : "Hours"}</h4>
           <p>
-            {pt ? "10h – 17h" : "10am – 5pm"}
+            {pt ? "Segunda a sexta · 10h – 17h" : "Mon–Fri · 10am – 5pm"}
             <br />
             {pt ? "Visitas com agendamento" : "Visits by appointment"}
           </p>
