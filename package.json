@@ -1,0 +1,26 @@
+{
+  "name": "val-de-almeida-jr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "build:pages": "node scripts/build-pages.mjs",
+    "publicar-preview": "node scripts/publicar-preview.mjs",
+    "importar-imagens": "node scripts/importar-imagens.mjs",
+    "gerar-logo": "node scripts/gerar-logo.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
