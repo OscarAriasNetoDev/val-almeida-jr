@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SocialLinks } from "./ui";
 import { useLang } from "./LangProvider";
 import { asset } from "@/lib/data";
+import { ENDERECO, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL, TELEFONES } from "@/lib/contato";
 
 export default function Footer() {
   const { lang } = useLang();
@@ -29,26 +30,37 @@ export default function Footer() {
         <div>
           <h4>{pt ? "Endereço" : "Address"}</h4>
           <p>
-            Rua dos Pinheiros, 1280
-            <br />
-            Pinheiros · São Paulo · SP
-            <br />
-            05422-002
+            <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+              {ENDERECO.linha1}
+              <br />
+              {ENDERECO.bairro} · {ENDERECO.cidade} · {ENDERECO.uf}
+              <br />
+              {ENDERECO.cep}
+            </a>
+          </p>
+          <p style={{ marginTop: 12 }}>
+            {TELEFONES.map((tel) => (
+              <a key={tel.href} href={tel.href} style={{ display: "block" }}>
+                {tel.texto}
+              </a>
+            ))}
           </p>
         </div>
         <div>
           <h4>{pt ? "Horários" : "Hours"}</h4>
           <p>
-            {pt ? "Terça a sexta · 10h–19h" : "Tue–Fri · 10am–7pm"}
-            <br />
-            {pt ? "Sábado · 11h–17h" : "Sat · 11am–5pm"}
+            {pt ? "10h – 17h" : "10am – 5pm"}
             <br />
             {pt ? "Visitas com agendamento" : "Visits by appointment"}
           </p>
         </div>
         <div>
           <h4>{pt ? "Redes" : "Social"}</h4>
-          <p>@valdealmeidajr</p>
+          <p>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+              {INSTAGRAM_NOME}
+            </a>
+          </p>
           <SocialLinks className="ft-social" />
         </div>
       </div>

@@ -8,11 +8,14 @@ import Icon from "@/components/Icon";
 import { GalleryGrid } from "@/components/cards";
 import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
-import { ARTISTS, ARTWORKS, I18N, dimLabel } from "@/lib/data";
-import type { Artwork } from "@/lib/data";
+import { ARTISTS, ARTWORKS, HAS_SOLD, I18N, MEDIUMS, dimLabel, workArea } from "@/lib/data";
+import type { Artwork, Medium } from "@/lib/data";
 
 type SortKey = "artista" | "maior" | "acervo";
+// Sem obra vendida no acervo, o recorte de disponibilidade sai do ar e o filtro
+// passa a ser por meio. Marcar sold: true em qualquer obra reacende os dois.
 type Status = "todas" | "disponiveis" | "vendidas";
+type Filtro = "todas" | Medium;
 
 function AcervoContent() {
   const { lang } = useLang();
@@ -25,6 +28,7 @@ function AcervoContent() {
   const [query, setQuery] = useState("");
   const [artist, setArtist] = useState(artistaInicial);
   const [status, setStatus] = useState<Status>("todas");
+  const [meio, setMeio] = useState<Filtro>("todas");
   const [sort, setSort] = useState<SortKey>("artista");
   const [lightbox, setLightbox] = useState<{ works: Artwork[]; index: number } | null>(null);
 
@@ -34,28 +38,34 @@ function AcervoContent() {
       if (artist && w.artist !== artist) return false;
       if (status === "vendidas" && !w.sold) return false;
       if (status === "disponiveis" && w.sold) return false;
+      if (meio !== "todas" && w.medium !== meio) return false;
       if (!q) return true;
       const campos = [w.artistName, w.title, w.technique, w.year, w.medium, dimLabel(w), w.note];
       return campos.join(" ").toLowerCase().includes(q);
     });
 
     return [...list].sort((a, b) => {
-      if (sort === "maior") return b.h * b.w - a.h * a.w;
+      if (sort === "maior") return workArea(b) - workArea(a);
       if (sort === "artista") {
         const porNome = a.artistName.localeCompare(b.artistName, "pt");
-        return porNome !== 0 ? porNome : b.h * b.w - a.h * a.w;
+        return porNome !== 0 ? porNome : workArea(b) - workArea(a);
       }
       return 0; // ordem do acervo
     });
-  }, [query, artist, status, sort]);
+  }, [query, artist, status, meio, sort]);
 
   const wlabel = t.works[works.length === 1 ? 0 : 1];
-  const limpar = query !== "" || artist !== "" || status !== "todas";
+  const limpar = query !== "" || artist !== "" || status !== "todas" || meio !== "todas";
 
   const filtrosStatus: { key: Status; label: string }[] = [
     { key: "todas", label: t.allFilter },
     { key: "disponiveis", label: t.available },
     { key: "vendidas", label: t.sold },
+  ];
+
+  const filtrosMeio: { key: Filtro; label: string }[] = [
+    { key: "todas", label: t.allFilter },
+    ...MEDIUMS.map((m) => ({ key: m as Filtro, label: m })),
   ];
 
   const ordenacoes: { key: SortKey; label: string }[] = [
@@ -75,8 +85,8 @@ function AcervoContent() {
           <h1 className="serif-title">{pt ? "Acervo completo" : "Full collection"}</h1>
           <p className="lead">
             {pt
-              ? "Navegue por todas as obras reunidas pelo escritório. Busque por artista, técnica, medida ou ano, e filtre por disponibilidade."
-              : "Browse every work gathered by the office. Search by artist, technique, size or year, and filter by availability."}
+              ? "Navegue por todas as obras reunidas pelo escritório. Busque por artista, técnica, medida ou ano, e filtre por meio."
+              : "Browse every work gathered by the office. Search by artist, technique, size or year, and filter by medium."}
           </p>
         </section>
 
@@ -100,11 +110,15 @@ function AcervoContent() {
             )}
           </div>
 
-          {/* Disponibilidade + artista */}
+          {/* Meio (ou disponibilidade, quando houver obra vendida) + artista */}
           <div className="acervo-filtros">
             <div className="filters">
-              {filtrosStatus.map((f) => (
-                <button key={f.key} className={status === f.key ? "on" : ""} onClick={() => setStatus(f.key)}>
+              {(HAS_SOLD ? filtrosStatus : filtrosMeio).map((f) => (
+                <button
+                  key={f.key}
+                  className={(HAS_SOLD ? status : meio) === f.key ? "on" : ""}
+                  onClick={() => (HAS_SOLD ? setStatus(f.key as Status) : setMeio(f.key as Filtro))}
+                >
                   {f.label}
                 </button>
               ))}
@@ -140,6 +154,7 @@ function AcervoContent() {
                     setQuery("");
                     setArtist("");
                     setStatus("todas");
+                    setMeio("todas");
                   }}
                 >
                   {pt ? "limpar filtros" : "clear filters"}

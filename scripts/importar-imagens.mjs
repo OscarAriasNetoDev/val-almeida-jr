@@ -16,7 +16,9 @@ import path from "node:path";
 import { CATALOGO, DUPLICADAS } from "./catalogo.mjs";
 
 const ORIGEM = "c:/Programação/Val/imagem";
-const PASTAS = [".", "SITE", "SITE/segunda leva", "vendido"];
+// Varre a raiz e qualquer subpasta que exista — a organização da pasta de
+// origem muda com o tempo, então nada de lista fixa.
+const PASTAS = [".", ...readdirSync(ORIGEM).filter((f) => statSync(path.join(ORIGEM, f)).isDirectory())];
 const EXT = /\.(jpe?g|png|webp|tiff?)$/i;
 const DESTINO = path.join(process.cwd(), "public", "obras");
 const PENDENTES = path.join(process.cwd(), "_pendentes");
@@ -45,8 +47,8 @@ for (const obra of CATALOGO) {
   if (!existsSync(full)) throw new Error(`arquivo do catálogo não encontrado: ${obra.src}`);
   usados.add(hashDe(full));
 
-  const dims = obra.prof ? `${obra.alt}x${obra.larg}x${obra.prof}` : `${obra.alt}x${obra.larg}`;
-  let slug = `${slugify(obra.artista)}-${dims}`;
+  const dims = obra.alt == null ? slugify(obra.titulo ?? "") : obra.prof ? `${obra.alt}x${obra.larg}x${obra.prof}` : `${obra.alt}x${obra.larg}`;
+  let slug = [slugify(obra.artista), slugify(String(dims))].filter(Boolean).join("-");
   let n = 2;
   while (linhas.some((l) => l.slug === slug)) slug = `${slugify(obra.artista)}-${dims}-${n++}`;
 

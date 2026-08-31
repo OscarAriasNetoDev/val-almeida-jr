@@ -17,7 +17,7 @@
 
 export type Lang = "pt" | "en";
 
-export type Medium = "Pintura" | "Escultura" | "Obra sobre papel";
+export type Medium = "Pintura" | "Escultura" | "Gravura" | "Obra sobre papel" | "Cerâmica";
 
 export interface Artwork {
   id: string;
@@ -26,10 +26,10 @@ export interface Artwork {
   title: string | null;
   year: number | null;
   technique: string | null;
-  /** altura da obra, em cm */
-  h: number;
+  /** altura da obra, em cm. Ausente quando o acervo ainda não a registra. */
+  h?: number;
   /** largura da obra, em cm */
-  w: number;
+  w?: number;
   /** profundidade da obra, em cm (tridimensionais) */
   d?: number;
   /** proporção largura ÷ altura da FOTO, para o card não recortar a obra */
@@ -52,60 +52,46 @@ export interface Artist {
 }
 
 export const ARTWORKS: Artwork[] = [
-  { id: "agostinho-batista-de-freitas-80x120", artist: "agostinho-batista-de-freitas", artistName: "Agostinho Batista de Freitas", title: null, year: 1972, technique: "Óleo sobre tela", h: 80, w: 120, ratio: 1.488, medium: "Pintura", sold: false },
-  { id: "aldemir-martins-30x40", artist: "aldemir-martins", artistName: "Aldemir Martins", title: null, year: null, technique: null, h: 30, w: 40, ratio: 1.292, medium: null, sold: false },
-  { id: "aldemir-martins-100x75", artist: "aldemir-martins", artistName: "Aldemir Martins", title: null, year: 1971, technique: "Acrílica sobre tela", h: 100, w: 75, ratio: 1, medium: "Pintura", sold: false },
+  { id: "aldemir-martins-ceramicas", artist: "aldemir-martins", artistName: "Aldemir Martins", title: "Cerâmicas", year: null, technique: null, ratio: 1.476, medium: "Cerâmica", sold: false, note: "Conjunto de cinco peças.", review: "Sem medida no nome do arquivo, e a foto mostra 5 peças — confirmar se é um lote único ou 5 obras separadas, e as medidas." },
   { id: "aldemir-martins-75x60", artist: "aldemir-martins", artistName: "Aldemir Martins", title: null, year: null, technique: "Escultura em chapa de aço e pintura automotiva", h: 75, w: 60, ratio: 1.495, medium: "Escultura", sold: false },
-  { id: "clovis-graciano-50x35", artist: "clovis-graciano", artistName: "Clóvis Graciano", title: null, year: null, technique: null, h: 50, w: 35, ratio: 1.821, medium: null, sold: false },
-  { id: "dionisio-del-santo-65x81", artist: "dionisio-del-santo", artistName: "Dionísio Del Santo", title: "Bovino Cultura", year: null, technique: "Acrílica sobre tela", h: 65, w: 81, ratio: 1.23, medium: "Pintura", sold: false },
-  { id: "efigenia-de-deus-45x55", artist: "efigenia-de-deus", artistName: "Efigênia de Deus", title: null, year: null, technique: null, h: 45, w: 55, ratio: 1.246, medium: null, sold: false },
-  { id: "efigenia-de-deus-60x40", artist: "efigenia-de-deus", artistName: "Efigênia de Deus", title: null, year: null, technique: null, h: 60, w: 40, ratio: 0.669, medium: null, sold: false },
-  { id: "samson-flexor-130x100", artist: "samson-flexor", artistName: "Samson Flexor", title: null, year: 1959, technique: "Óleo sobre tela", h: 130, w: 100, ratio: 0.746, medium: "Pintura", sold: false, note: "Obra reproduzida no livro do artista; participou da exposição no MAM SP." },
-  { id: "gabriela-brasileiro-100x150", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: null, h: 100, w: 150, ratio: 0.658, medium: null, sold: false },
-  { id: "gabriela-brasileiro-160x120", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: null, h: 160, w: 120, ratio: 0.769, medium: null, sold: false },
-  { id: "guyer-salles-100x140", artist: "guyer-salles", artistName: "Guyer Salles", title: null, year: null, technique: null, h: 100, w: 140, ratio: 1.488, medium: null, sold: false },
-  { id: "guyer-salles-60x80", artist: "guyer-salles", artistName: "Guyer Salles", title: null, year: null, technique: null, h: 60, w: 80, ratio: 0.563, medium: null, sold: false },
-  { id: "ibere-camargo-70x100", artist: "ibere-camargo", artistName: "Iberê Camargo", title: null, year: null, technique: "Óleo sobre placa", h: 70, w: 100, ratio: 1.309, medium: "Pintura", sold: false, note: "Obra registrada na Fundação Iberê Camargo." },
-  { id: "inacio-rodrigues-30x30", artist: "inacio-rodrigues", artistName: "Inácio Rodrigues", title: null, year: null, technique: null, h: 30, w: 30, ratio: 0.993, medium: null, sold: false },
-  { id: "jose-a-silva-55x38", artist: "jose-a-silva", artistName: "José A. Silva", title: null, year: null, technique: null, h: 55, w: 38, ratio: 0.72, medium: null, sold: false },
-  { id: "jorge-fonseca-50x30x30", artist: "jorge-fonseca", artistName: "Jorge Fonseca", title: null, year: null, technique: "Caixa de cetim", h: 50, w: 30, d: 30, ratio: 1.182, medium: "Escultura", sold: false },
-  { id: "jorge-dos-anjos-220x40x40", artist: "jorge-dos-anjos", artistName: "Jorge dos Anjos", title: null, year: null, technique: "Aço corten", h: 220, w: 40, d: 40, ratio: 0.815, medium: "Escultura", sold: false },
-  { id: "luiz-solha-120x160", artist: "luiz-solha", artistName: "Luiz Solha", title: null, year: null, technique: null, h: 120, w: 160, ratio: 1.221, medium: null, sold: false },
-  { id: "luiz-solha-160x190", artist: "luiz-solha", artistName: "Luiz Solha", title: null, year: null, technique: null, h: 160, w: 190, ratio: 1.22, medium: null, sold: false },
-  { id: "luis-tomasello-35x35", artist: "luis-tomasello", artistName: "Luis Tomasello", title: null, year: null, technique: null, h: 35, w: 35, ratio: 0.75, medium: null, sold: false },
-  { id: "manoel-martins-40x60", artist: "manoel-martins", artistName: "Manoel Martins", title: null, year: null, technique: null, h: 40, w: 60, ratio: 1.156, medium: null, sold: false },
-  { id: "mauricio-nogueira-lima-80x60", artist: "mauricio-nogueira-lima", artistName: "Maurício Nogueira Lima", title: null, year: null, technique: null, h: 80, w: 60, ratio: 0.747, medium: null, sold: false },
-  { id: "newton-mesquita-120x100", artist: "newton-mesquita", artistName: "Newton Mesquita", title: null, year: null, technique: null, h: 120, w: 100, ratio: 0.868, medium: null, sold: false },
-  { id: "newton-mesquita-160x160", artist: "newton-mesquita", artistName: "Newton Mesquita", title: null, year: null, technique: null, h: 160, w: 160, ratio: 1.006, medium: null, sold: false },
-  { id: "paulo-von-poser-120x50", artist: "paulo-von-poser", artistName: "Paulo von Poser", title: null, year: null, technique: null, h: 120, w: 50, ratio: 0.502, medium: null, sold: false },
-  { id: "pink-wainer-170x15", artist: "pink-wainer", artistName: "Pink Wainer", title: null, year: null, technique: null, h: 170, w: 15, ratio: 0.895, medium: null, sold: false, review: "A medida 170x15 do nome do arquivo não bate com a proporção da foto (quase quadrada)." },
-  { id: "rosario-moreno-100x66", artist: "rosario-moreno", artistName: "Rosario Moreno", title: null, year: null, technique: null, h: 100, w: 66, ratio: 0.645, medium: null, sold: false },
-  { id: "sou-kit-gom-120x130", artist: "sou-kit-gom", artistName: "Sou Kit Gom", title: null, year: null, technique: null, h: 120, w: 130, ratio: 0.75, medium: null, sold: false },
-  { id: "sergio-niculitcheff-50x70", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: null, technique: null, h: 50, w: 70, ratio: 1.177, medium: null, sold: false },
-  { id: "sergio-niculitcheff-100x140", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: null, technique: "Acrílica sobre tela", h: 100, w: 140, ratio: 1.344, medium: "Pintura", sold: false },
-  { id: "sergio-niculitcheff-70x50", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: null, technique: "Acrílica sobre tela", h: 70, w: 50, ratio: 0.713, medium: "Pintura", sold: false },
-  { id: "sergio-telles-69x80", artist: "sergio-telles", artistName: "Sérgio Telles", title: "Natureza-morta", year: null, technique: "Óleo sobre tela", h: 69, w: 80, ratio: 1.246, medium: "Pintura", sold: false },
-  { id: "victor-lema-rique-160x190", artist: "victor-lema-rique", artistName: "Victor Lema Rique", title: null, year: 2012, technique: null, h: 160, w: 190, ratio: 1.113, medium: null, sold: false },
-  { id: "wesley-duke-lee-60x80", artist: "wesley-duke-lee", artistName: "Wesley Duke Lee", title: null, year: null, technique: null, h: 60, w: 80, ratio: 1.29, medium: null, sold: false },
-  { id: "zorlini-65x57", artist: "zorlini", artistName: "Zorlini", title: null, year: null, technique: null, h: 65, w: 57, ratio: 0.893, medium: null, sold: false, note: "Medida tomada com a moldura." },
-  { id: "leda-catunda-152x180", artist: "leda-catunda", artistName: "Leda Catunda", title: null, year: null, technique: null, h: 152, w: 180, ratio: 1.08, medium: null, sold: false },
-
-  // ---- Obras vendidas ----
-  { id: "agostinho-batista-de-freitas-60x80", artist: "agostinho-batista-de-freitas", artistName: "Agostinho Batista de Freitas", title: null, year: null, technique: null, h: 60, w: 80, ratio: 0.809, medium: null, sold: true },
-  { id: "aldemir-martins-50x35", artist: "aldemir-martins", artistName: "Aldemir Martins", title: null, year: null, technique: null, h: 50, w: 35, ratio: 0.771, medium: null, sold: true },
-  { id: "antonio-bandeira-32x24", artist: "antonio-bandeira", artistName: "Antônio Bandeira", title: null, year: null, technique: null, h: 32, w: 24, ratio: 0.729, medium: null, sold: true },
-  { id: "bruno-giorgi-89x40x10", artist: "bruno-giorgi", artistName: "Bruno Giorgi", title: null, year: null, technique: null, h: 89, w: 40, d: 10, ratio: 0.625, medium: "Escultura", sold: true },
-  { id: "di-cavalcanti-22x31", artist: "di-cavalcanti", artistName: "Di Cavalcanti", title: null, year: null, technique: null, h: 22, w: 31, ratio: 1.351, medium: null, sold: true },
-  { id: "di-cavalcanti-38x55", artist: "di-cavalcanti", artistName: "Di Cavalcanti", title: null, year: null, technique: "Óleo sobre tela", h: 38, w: 55, ratio: 1.432, medium: "Pintura", sold: true },
-  { id: "fang-60x80", artist: "fang", artistName: "Fang", title: null, year: null, technique: null, h: 60, w: 80, ratio: 1.382, medium: null, sold: true },
-  { id: "ivald-granato-20x160", artist: "ivald-granato", artistName: "Ivald Granato", title: null, year: null, technique: null, h: 20, w: 160, ratio: 6.522, medium: null, sold: true, review: "O nome do arquivo diz “160x20cn”; a foto é uma faixa horizontal, então foi registrada como 20 × 160 cm." },
-  { id: "jorge-dos-anjos-115x115", artist: "jorge-dos-anjos", artistName: "Jorge dos Anjos", title: null, year: null, technique: "Relevo em aço corten", h: 115, w: 115, ratio: 0.75, medium: "Escultura", sold: true },
-  { id: "jose-a-silva-65x90", artist: "jose-a-silva", artistName: "José A. Silva", title: null, year: null, technique: null, h: 65, w: 90, ratio: 1.451, medium: null, sold: true },
-  { id: "marcelo-grassmann-45x65", artist: "marcelo-grassmann", artistName: "Marcelo Grassmann", title: null, year: null, technique: "Sanguínea sobre papel", h: 45, w: 65, ratio: 1.422, medium: "Obra sobre papel", sold: true },
-  { id: "newton-mesquita-160x160-2", artist: "newton-mesquita", artistName: "Newton Mesquita", title: null, year: null, technique: null, h: 160, w: 160, ratio: 1.035, medium: null, sold: true },
-  { id: "paulo-roberto-leal-30x17", artist: "paulo-roberto-leal", artistName: "Paulo Roberto Leal", title: null, year: null, technique: "Acrílica e colagem sobre papel", h: 30, w: 17, ratio: 0.498, medium: "Obra sobre papel", sold: true },
-  { id: "silvio-pinto-51x58", artist: "silvio-pinto", artistName: "Silvio Pinto", title: null, year: null, technique: "Óleo sobre tela", h: 51, w: 58, ratio: 1.245, medium: "Pintura", sold: true },
-  { id: "alfredo-volpi-23x41", artist: "alfredo-volpi", artistName: "Alfredo Volpi", title: null, year: null, technique: null, h: 23, w: 41, ratio: 1.593, medium: null, sold: true },
+  { id: "aldir-mendes-de-souza-100x100", artist: "aldir-mendes-de-souza", artistName: "Aldir Mendes de Souza", title: null, year: null, technique: "Têmpera sobre tela", h: 100, w: 100, ratio: 0.99, medium: "Pintura", sold: false },
+  { id: "alfredo-volpi-67-5x135-5", artist: "alfredo-volpi", artistName: "Alfredo Volpi", title: null, year: null, technique: "Têmpera sobre tela", h: 67.5, w: 135.5, ratio: 1.969, medium: "Pintura", sold: false, note: "Início da década de 1970." },
+  { id: "amilcar-de-castro-20x28", artist: "amilcar-de-castro", artistName: "Amilcar de Castro", title: null, year: null, technique: "Escultura em aço corten", h: 20, w: 28, ratio: 1.334, medium: "Escultura", sold: false },
+  { id: "amilcar-de-castro-40x60x5", artist: "amilcar-de-castro", artistName: "Amilcar de Castro", title: null, year: null, technique: "Escultura em aço corten", h: 40, w: 60, d: 5, ratio: 1.207, medium: "Escultura", sold: false },
+  { id: "amilcar-de-castro-70x100", artist: "amilcar-de-castro", artistName: "Amilcar de Castro", title: null, year: null, technique: "Litografia", h: 70, w: 100, ratio: 1.392, medium: "Gravura", sold: false, note: "Certificada no Projeto Amilcar de Castro." },
+  { id: "amilcar-de-castro-100x70", artist: "amilcar-de-castro", artistName: "Amilcar de Castro", title: null, year: null, technique: "Litografia", h: 100, w: 70, ratio: 0.717, medium: "Gravura", sold: false, note: "Certificada no Projeto Amilcar de Castro.", review: "O nome do arquivo diz 70x100 como as outras duas, mas esta gravura é vertical — registrada como 100 × 70 cm. Conferir." },
+  { id: "amilcar-de-castro-70x100-2", artist: "amilcar-de-castro", artistName: "Amilcar de Castro", title: null, year: null, technique: "Litografia", h: 70, w: 100, ratio: 1.43, medium: "Gravura", sold: false, note: "Certificada no Projeto Amilcar de Castro." },
+  { id: "antonio-bandeira-25x34", artist: "antonio-bandeira", artistName: "Antônio Bandeira", title: null, year: null, technique: "Aquarela", h: 25, w: 34, ratio: 1.266, medium: "Obra sobre papel", sold: false, review: "O nome do arquivo traz DUAS medidas: 25x34cm e 25x35cm. Ficou a primeira. Conferir qual é a certa." },
+  { id: "antonio-bandeira-25x35", artist: "antonio-bandeira", artistName: "Antônio Bandeira", title: null, year: null, technique: "Aquarela", h: 25, w: 35, ratio: 1.361, medium: "Obra sobre papel", sold: false },
+  { id: "antonio-bandeira-35x25", artist: "antonio-bandeira", artistName: "Antônio Bandeira", title: null, year: null, technique: "Aquarela", h: 35, w: 25, ratio: 0.719, medium: "Obra sobre papel", sold: false },
+  { id: "chen-kong-fang-35x43", artist: "chen-kong-fang", artistName: "Chen-Kong Fang", title: "Fruteira", year: 1959, technique: "Óleo sobre tela", h: 35, w: 43, ratio: 1.197, medium: "Pintura", sold: false },
+  { id: "chen-kong-fang-120x125", artist: "chen-kong-fang", artistName: "Chen-Kong Fang", title: null, year: null, technique: "Óleo sobre madeira", h: 120, w: 125, ratio: 1.227, medium: "Pintura", sold: false },
+  { id: "chen-kong-fang-32x20", artist: "chen-kong-fang", artistName: "Chen-Kong Fang", title: null, year: null, technique: "Óleo sobre tela", h: 32, w: 20, ratio: 0.728, medium: "Pintura", sold: false },
+  { id: "chen-kong-fang-55x40", artist: "chen-kong-fang", artistName: "Chen-Kong Fang", title: null, year: null, technique: "Óleo sobre tela sobre madeira", h: 55, w: 40, ratio: 0.721, medium: "Pintura", sold: false },
+  { id: "claudio-tozzi-100x150", artist: "claudio-tozzi", artistName: "Claudio Tozzi", title: "N.Y", year: null, technique: "Óleo sobre tela sobre madeira", h: 100, w: 150, ratio: 1.539, medium: "Pintura", sold: false, note: "Década de 1980." },
+  { id: "di-cavalcanti-55x65", artist: "di-cavalcanti", artistName: "Di Cavalcanti", title: null, year: 1979, technique: "Óleo sobre tela", h: 55, w: 65, ratio: 1.183, medium: "Pintura", sold: false, review: "O nome do arquivo diz \"Década de 1979\" — 1979 é ano, não década. Registrado como ano de 1979; conferir se não é a década de 1970." },
+  { id: "dionisio-del-santo-55x80", artist: "dionisio-del-santo", artistName: "Dionísio Del Santo", title: "Fazendinha", year: 1983, technique: "Óleo sobre tela", h: 55, w: 80, ratio: 1.249, medium: "Pintura", sold: false, review: "Esta MESMA foto estava antes no acervo como \"acrílica sobre tela, 65x81cm, Bovino Cultura\". A proporção da foto (1,25) fecha com 65×81 e não com 55×80. Conferir técnica, medida e título." },
+  { id: "felix-toranzo-120x102", artist: "felix-toranzo", artistName: "Félix Toranzo", title: null, year: null, technique: "Acrílica sobre tela", h: 120, w: 102, ratio: 2.081, medium: "Pintura", sold: false, note: "Díptico — a medida é de cada painel." },
+  { id: "gabriela-brasileiro-120x160", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: "Acrílica sobre tela", h: 120, w: 160, ratio: 1.373, medium: "Pintura", sold: false },
+  { id: "gabriela-brasileiro-110x150", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: "Acrílica sobre tela", h: 110, w: 150, ratio: 1.246, medium: "Pintura", sold: false },
+  { id: "gabriela-brasileiro-120x120", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: "Acrílica sobre tela", h: 120, w: 120, ratio: 0.992, medium: "Pintura", sold: false },
+  { id: "gabriela-brasileiro-150x120", artist: "gabriela-brasileiro", artistName: "Gabriela Brasileiro", title: null, year: null, technique: "Acrílica sobre tela", h: 150, w: 120, ratio: 0.768, medium: "Pintura", sold: false },
+  { id: "ianelli-100x80", artist: "ianelli", artistName: "Ianelli", title: null, year: null, technique: "Têmpera sobre tela", h: 100, w: 80, ratio: 0.804, medium: "Pintura", sold: false, note: "Década de 1970.", review: "O arquivo traz só o sobrenome. Confirmar se é Arcangelo Ianelli ou Thomaz Ianelli." },
+  { id: "ibere-camargo-70x100", artist: "ibere-camargo", artistName: "Iberê Camargo", title: null, year: null, technique: "Óleo sobre cartão colado em madeira", h: 70, w: 100, ratio: 1.422, medium: "Pintura", sold: false, note: "Reproduzida em catálogo de exposição do artista." },
+  { id: "jorge-dos-anjos-300x200", artist: "jorge-dos-anjos", artistName: "Jorge dos Anjos", title: null, year: null, technique: "Escultura em aço corten", h: 300, w: 200, ratio: 0.75, medium: "Escultura", sold: false, review: "As outras duas esculturas do artista têm três medidas (240x40x40 e 230x40x40); esta só tem duas. Falta a profundidade?" },
+  { id: "jorge-dos-anjos-240x40x40", artist: "jorge-dos-anjos", artistName: "Jorge dos Anjos", title: null, year: null, technique: "Escultura em aço corten", h: 240, w: 40, d: 40, ratio: 0.615, medium: "Escultura", sold: false },
+  { id: "jorge-dos-anjos-230x40x40", artist: "jorge-dos-anjos", artistName: "Jorge dos Anjos", title: null, year: null, technique: "Escultura em aço corten e tinta automotiva", h: 230, w: 40, d: 40, ratio: 0.75, medium: "Escultura", sold: false },
+  { id: "marcello-tomazelli-110x160", artist: "marcello-tomazelli", artistName: "Marcello Tomazelli", title: null, year: null, technique: "Acrílica sobre tela", h: 110, w: 160, ratio: 1.486, medium: "Pintura", sold: false },
+  { id: "mira-schendel-50x70", artist: "mira-schendel", artistName: "Mira Schendel", title: null, year: null, technique: "Óleo e ecoline sobre papel", h: 50, w: 70, ratio: 1.255, medium: "Obra sobre papel", sold: false },
+  { id: "paulo-torres-90x170", artist: "paulo-torres", artistName: "Paulo Torres", title: null, year: null, technique: "Acrílica sobre tela", h: 90, w: 170, ratio: 1.834, medium: "Pintura", sold: false },
+  { id: "rubens-matuck-100x160", artist: "rubens-matuck", artistName: "Rubens Matuck", title: null, year: 2000, technique: "Óleo sobre tela", h: 100, w: 160, ratio: 1.325, medium: "Pintura", sold: false, note: "Díptico.", review: "A medida vem sem unidade no nome do arquivo e não diz se 100x160 é cada painel ou o conjunto." },
+  { id: "samson-flexor-130x100", artist: "samson-flexor", artistName: "Samson Flexor", title: null, year: 1959, technique: "Óleo sobre tela", h: 130, w: 100, ratio: 0.746, medium: "Pintura", sold: false, note: "Reproduzida no livro do artista." },
+  { id: "sergio-niculitcheff-100x140", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: 2001, technique: "Acrílica sobre tela", h: 100, w: 140, ratio: 1.344, medium: "Pintura", sold: false },
+  { id: "sergio-niculitcheff-70x50", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: 2001, technique: "Acrílica sobre tela", h: 70, w: 50, ratio: 0.713, medium: "Pintura", sold: false },
+  { id: "sergio-niculitcheff-100x140-2", artist: "sergio-niculitcheff", artistName: "Sérgio Niculitcheff", title: null, year: 2001, technique: "Óleo sobre tela", h: 100, w: 140, ratio: 1.438, medium: "Pintura", sold: false },
+  { id: "sergio-telles-60x80", artist: "sergio-telles", artistName: "Sérgio Telles", title: null, year: null, technique: "Óleo sobre placa", h: 60, w: 80, ratio: 1.246, medium: "Pintura", sold: false, review: "Esta MESMA foto estava antes no acervo como \"óleo sobre tela, natureza-morta, 69x80cm\". Mudaram o suporte e a medida, e o título sumiu. Conferir." },
+  { id: "victor-lema-rique-200x170", artist: "victor-lema-rique", artistName: "Victor Lema Rique", title: null, year: 1995, technique: "Acrílica sobre tela", h: 200, w: 170, ratio: 0.879, medium: "Pintura", sold: false, note: "Reproduzida no catálogo da Galeria Nara Roesler." },
+  { id: "wesley-duke-lee-60x80", artist: "wesley-duke-lee", artistName: "Wesley Duke Lee", title: "Série N.Y", year: null, technique: "Xerox colorido", h: 60, w: 80, ratio: 1.29, medium: "Obra sobre papel", sold: false },
 ];
 
 /**
@@ -129,18 +115,34 @@ export const asset = (caminho: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?
 /** Caminho da imagem da obra dentro de public/. */
 export const artworkSrc = (work: Artwork) => asset(`/obras/${work.id}.jpg`);
 
-/** "130 × 100 cm" — ou "50 × 30 × 30 cm" nas tridimensionais. */
-export function dimLabel(work: Artwork): string {
-  const partes = work.d ? [work.h, work.w, work.d] : [work.h, work.w];
-  return `${partes.join(" × ")} cm`;
+/**
+ * "130 × 100 cm" — ou "50 × 30 × 30 cm" nas tridimensionais.
+ * Devolve null quando o acervo ainda não registra a medida da obra.
+ */
+export function dimLabel(work: Artwork): string | null {
+  if (work.h == null || work.w == null) return null;
+  const partes = work.d != null ? [work.h, work.w, work.d] : [work.h, work.w];
+  // decimal com vírgula: 67,5 × 135,5 cm
+  return `${partes.map((n) => String(n).replace(".", ",")).join(" × ")} cm`;
 }
 
 /**
  * Rótulo da obra: "Aldemir Martins, 30 × 40 cm".
  * As obras do acervo não têm título próprio — o nome do artista e a medida
- * são o que as identifica, como nos nomes dos arquivos originais.
+ * são o que as identifica, como nos nomes dos arquivos originais. Sem medida
+ * registrada, o rótulo é só o nome do artista.
  */
-export const workLabel = (work: Artwork) => `${work.artistName}, ${dimLabel(work)}`;
+export function workLabel(work: Artwork): string {
+  const medida = dimLabel(work);
+  return medida ? `${work.artistName}, ${medida}` : work.artistName;
+}
+
+/**
+ * Área da obra em cm², para ordenar por tamanho.
+ * Obra sem medida registrada vai para o fim da lista.
+ */
+export const workArea = (work: Artwork) =>
+  work.h != null && work.w != null ? work.h * work.w : -1;
 
 /** Segunda linha: título, técnica e ano — só o que existir. Pode ser vazia. */
 export const workCaption = (work: Artwork) =>
@@ -167,7 +169,14 @@ export const ARTISTS: Artist[] = Object.values(
   }, {})
 ).sort((a, b) => a.name.localeCompare(b.name, "pt"));
 
-export const MEDIUMS: Medium[] = ["Pintura", "Escultura", "Obra sobre papel"];
+const ORDEM_MEIOS: Medium[] = ["Pintura", "Escultura", "Gravura", "Obra sobre papel", "Cerâmica"];
+
+/** Só os meios que existem no acervo, para não gerar filtro vazio. */
+export const MEDIUMS: Medium[] = ORDEM_MEIOS.filter((m) => ARTWORKS.some((w) => w.medium === m));
+
+/** Há alguma obra marcada como vendida? O filtro de disponibilidade só
+ *  aparece quando houver — hoje o acervo não registra nenhuma. */
+export const HAS_SOLD = ARTWORKS.some((w) => w.sold);
 
 interface I18NEntry {
   nav: [string, string, string];

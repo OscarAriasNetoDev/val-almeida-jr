@@ -10,10 +10,14 @@ import Icon from "@/components/Icon";
 import { ArtistCard, GalleryGrid } from "@/components/cards";
 import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
-import { ARTISTS, ARTWORKS, I18N, artworkSrc, workCaption, workLabel } from "@/lib/data";
-import type { Artwork } from "@/lib/data";
+import { ARTISTS, ARTWORKS, I18N, MEDIUMS, artworkSrc, workCaption, workLabel } from "@/lib/data";
+import type { Artwork, Medium } from "@/lib/data";
+import { INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL } from "@/lib/contato";
 
-type Status = "todas" | "disponiveis" | "vendidas";
+// O acervo ainda não registra obras vendidas, então o filtro aqui é por meio.
+// O selo "Vendida" e o recorte por disponibilidade continuam no código, presos
+// a HAS_SOLD (lib/data.ts): marcar sold: true numa obra traz os dois de volta.
+type Filtro = "todas" | Medium;
 
 /** Quantas obras a home mostra antes de mandar para o acervo completo. */
 const DESTAQUES = 12;
@@ -29,7 +33,7 @@ interface LightboxState {
 
 export default function HomePage() {
   const { lang } = useLang();
-  const [status, setStatus] = useState<Status>("todas");
+  const [filtro, setFiltro] = useState<Filtro>("todas");
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
   const t = I18N[lang];
   const pt = lang === "pt";
@@ -43,15 +47,12 @@ export default function HomePage() {
     setHeroWork(disponiveis[Math.floor(Math.random() * disponiveis.length)]);
   }, [disponiveis]);
 
-  const filtros: { key: Status; label: string }[] = [
+  const filtros: { key: Filtro; label: string }[] = [
     { key: "todas", label: t.allFilter },
-    { key: "disponiveis", label: t.available },
-    { key: "vendidas", label: t.sold },
+    ...MEDIUMS.map((m) => ({ key: m as Filtro, label: m })),
   ];
 
-  const filtradas = ARTWORKS.filter((w) =>
-    status === "todas" ? true : status === "vendidas" ? w.sold : !w.sold
-  );
+  const filtradas = ARTWORKS.filter((w) => filtro === "todas" || w.medium === filtro);
   const destaques = filtradas.slice(0, DESTAQUES);
 
   return (
@@ -150,7 +151,7 @@ export default function HomePage() {
           <div className="filterbar">
             <div className="filters">
               {filtros.map((f) => (
-                <button key={f.key} className={status === f.key ? "on" : ""} onClick={() => setStatus(f.key)}>
+                <button key={f.key} className={filtro === f.key ? "on" : ""} onClick={() => setFiltro(f.key)}>
                   {f.label}
                 </button>
               ))}
@@ -182,9 +183,11 @@ export default function HomePage() {
                   <Icon name="map-pin" size={15} /> {pt ? "Endereço" : "Address"}
                 </h4>
                 <p>
-                  Rua dos Pinheiros, 1280 · Pinheiros
-                  <br />
-                  São Paulo · SP · 05422-002
+                  <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                    Rua Visconde de Ouro Preto, 139 · Consolação
+                    <br />
+                    São Paulo · SP · 01303-060
+                  </a>
                 </p>
               </div>
               <div className="blk">
@@ -192,9 +195,7 @@ export default function HomePage() {
                   <Icon name="clock" size={15} /> {pt ? "Horários" : "Hours"}
                 </h4>
                 <p>
-                  {pt ? "Terça a sexta · 10h–19h" : "Tue–Fri · 10am–7pm"}
-                  <br />
-                  {pt ? "Sábado · 11h–17h" : "Sat · 11am–5pm"}
+                  {pt ? "10h – 17h" : "10am – 5pm"}
                   <br />
                   {pt ? "Visitas com agendamento" : "Visits by appointment"}
                 </p>
@@ -212,24 +213,26 @@ export default function HomePage() {
                   <Icon name="phone" size={15} /> {pt ? "Telefone" : "Phone"}
                 </h4>
                 <p>
-                  <a href="tel:+551130600000">+55 11 3060-0000</a>
+                  <a href="tel:+551130883240">+55 11 3088-3240</a>
+                  <br />
+                  <a href="tel:+5531988787858">+55 31 98878-7858</a>
                 </p>
               </div>
               <div className="blk">
                 <h4>
                   <Icon name="instagram" size={15} /> {pt ? "Redes" : "Social"}
                 </h4>
-                <div className="contact-social">
-                  <a href="#" aria-label="Instagram">
-                    <Icon name="instagram" size={20} />
+                <p>
+                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+                    {INSTAGRAM_NOME}
                   </a>
-                  <a href="#" aria-label="Facebook">
-                    <Icon name="facebook" size={20} />
-                  </a>
-                </div>
+                </p>
               </div>
             </div>
-            <div className="map-strip">{pt ? "mapa" : "map"}</div>
+            <a className="map-strip" href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+              <Icon name="map-pin" size={18} />
+              {pt ? "Ver no mapa" : "Open in maps"}
+            </a>
           </div>
         </section>
       </main>

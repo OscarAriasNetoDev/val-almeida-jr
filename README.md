@@ -14,8 +14,8 @@ Estética: minimalismo de galeria — base off-white quente, muito espaço em br
 
 | Rota       | Descrição |
 |------------|-----------|
-| `/`        | Home de página única: Hero, Sobre (desde 1987), Artistas do acervo, Acervo em destaque (12 obras, filtro por disponibilidade, lightbox) e Contato. |
-| `/acervo`  | Acervo completo: busca por texto (artista, técnica, medida, ano), filtro por disponibilidade, filtro por artista, ordenação e lightbox. Aceita `?artista=<id>` — é o link dos cartões de artista da home. |
+| `/`        | Home de página única: Hero, Sobre (desde 1987), Artistas do acervo, Acervo em destaque (12 obras, filtro por meio, lightbox) e Contato. |
+| `/acervo`  | Acervo completo: busca por texto (artista, técnica, medida, ano), filtro por meio, filtro por artista, ordenação e lightbox. Aceita `?artista=<id>` — é o link dos cartões de artista da home. |
 
 ## Prévia para o cliente
 
@@ -35,7 +35,7 @@ Três detalhes que essa configuração exige (todos já resolvidos, mas bom sabe
 
 - **O site roda em subpasta**, então o build usa `basePath`. O `<Link>` do Next aplica isso sozinho, mas o `<Image>` **não**, porque a otimização de imagem está desligada (não há servidor). Por isso todo caminho de `public/` passa pelo helper `asset()`, em `lib/data.ts`. Se alguma imagem nova apontar direto para `/algo.jpg`, ela vai dar 404 na prévia.
 - **`out/.nojekyll`** é obrigatório. Sem ele o GitHub Pages passa o site pelo Jekyll, que ignora pastas iniciadas em underscore e derruba todo o `/_next/` — o site sai sem CSS nem JS. O `build:pages` escreve esse arquivo.
-- **Sem otimização de imagem.** As fotos são servidas no tamanho em que estão em `public/obras/` (máx. 1800px, ~6 MB somando as 52). Suficiente para a prévia; num domínio próprio com servidor Next, a otimização volta sozinha.
+- **Sem otimização de imagem.** As fotos são servidas no tamanho em que estão em `public/obras/` (máx. 1800px, ~6 MB somando as 40). Suficiente para a prévia; num domínio próprio com servidor Next, a otimização volta sozinha.
 
 O `npm run dev` e o `npm run build` continuam sem `basePath` — ele só liga com a variável `GITHUB_PAGES=true`, que o `build:pages` define.
 
@@ -61,11 +61,14 @@ components/
   Icon.tsx ui.tsx cards.tsx modals.tsx
 lib/
   data.ts             ARTWORKS (acervo), ARTIST_BIOS, I18N — fonte de verdade
+  contato.ts          endereço, telefones, Instagram, link do mapa
 scripts/
   catalogo.mjs        mapa arquivo-original -> metadados da obra
+  conferir-imagens.mjs auditoria da pasta de origem (só lê, não muda nada)
+  gerar-logo.mjs      gera as versões clara e escura da logo
   importar-imagens.mjs gera public/obras/ e _pendentes/ a partir dos originais
 public/
-  obras/              52 imagens do acervo, uma por obra
+  obras/              40 imagens do acervo, uma por obra
   logo-wordmark-*.png wordmarks
 _pendentes/           imagens ainda sem nome de artista e/ou medida (fora do site)
 _handoff/             bundle original do design system (referência)
@@ -81,7 +84,7 @@ Convenção das medidas, confirmada comparando cada nome de arquivo com a propor
 
 1. Renomeie a imagem em `_pendentes/` no padrão dos originais — nome do artista + medida, e o que mais souber:
    `Nome do Artista, técnica, ano, 80x120cm, "Título".jpg`
-2. Mova o arquivo para `c:/Programação/Val/imagem/` (ou `imagem/vendido/` se já foi vendida).
+2. Mova o arquivo para `c:/Programação/Val/imagem/`. Se a obra já foi vendida, marque `vendido: true` na entrada do catálogo.
 3. Acrescente a entrada em `scripts/catalogo.mjs` e rode:
    ```bash
    npm run importar-imagens
@@ -95,7 +98,18 @@ Convenção das medidas, confirmada comparando cada nome de arquivo com a propor
 
 As obras do acervo não têm título próprio. O que as identifica é **o nome do artista mais a medida** — `Aldemir Martins, 30 × 40 cm` — igual ao nome do arquivo original. É o que `workLabel()` monta, e é o rótulo do card, do lightbox e do texto alternativo da imagem.
 
-Técnica, ano e título (quando existem) entram numa segunda linha, via `workCaption()`. Só duas obras têm título registrado: "Bovino Cultura" e "Natureza-morta".
+Técnica, ano e título (quando existem) entram numa segunda linha, via `workCaption()`. Poucas obras têm título registrado — hoje "Cerâmicas", "Fruteira", "N.Y", "Fazendinha" e "Série N.Y". Sem medida registrada, o rótulo é só o nome do artista.
+
+### Filtro: meio ou disponibilidade
+
+O acervo atual não registra nenhuma obra como vendida, então o filtro do site é
+por **meio** (Pintura, Escultura, Gravura, Obra sobre papel, Cerâmica). O selo
+"Vendida" e o recorte Disponíveis/Vendidas continuam no código, presos a
+`HAS_SOLD` em `lib/data.ts`: basta marcar `sold: true` em qualquer obra que os
+dois voltam sozinhos, e o filtro por meio dá lugar ao de disponibilidade.
+
+`MEDIUMS` também só lista os meios que existem no acervo, para não gerar botão
+de filtro que não devolve nada.
 
 ### Obra em destaque na home
 

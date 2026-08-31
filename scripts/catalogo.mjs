@@ -4,91 +4,148 @@
 // Os dados vêm dos nomes dos arquivos. A convenção de medida foi confirmada
 // comparando com a proporção real das fotos: ALTURA × LARGURA, em cm.
 //
+// Grafias de artista e de técnica foram uniformizadas aqui (os nomes de arquivo
+// trazem variações e erros de digitação); o comentário marca cada correção.
+//
 // Campos:
 //   src        caminho relativo à pasta de imagens de origem
 //   artista    nome canônico (grafia unificada entre os arquivos)
-//   titulo     ausente => exibido como "Sem título"
+//   titulo     ausente => o rótulo da obra é só artista + medida
 //   ano        ausente quando não informado no nome do arquivo
 //   tecnica    ausente quando não informada no nome do arquivo — não inventar
-//   alt/larg   em cm; prof opcional (obras tridimensionais)
+//   alt/larg   em cm; prof opcional (tridimensionais). Ausentes = medida
+//              desconhecida; o site então omite a medida do rótulo.
 //   nota       observação vinda do nome do arquivo
-//   meio       "Pintura" | "Escultura" | "Obra sobre papel" — só quando há evidência
-//   vendido    true para a pasta vendido/
-//   revisar    medida suspeita, marcada para conferência
+//   meio       "Pintura" | "Escultura" | "Gravura" | "Obra sobre papel" | "Cerâmica"
+//   vendido    true quando a obra já foi vendida
+//   revisar    dado suspeito, marcado para conferência (não aparece no site)
 
 export const CATALOGO = [
-  // ---------------- Disponíveis ----------------
-  // "Agostinho Batista de Freitas 80x120cm.jpg" é a mesma obra, fotografada de
-  // novo; fica esta, cuja proporção bate com os 80 × 120 cm.
-  { src: "Agostinho Batista de Freitas, óleo sobre tela, 1972, 80x120cm..jpeg", artista: "Agostinho Batista de Freitas", ano: 1972, tecnica: "Óleo sobre tela", alt: 80, larg: 120, meio: "Pintura" },
-  { src: "Aldemir  Martins 30x40cm.jpg", artista: "Aldemir Martins", alt: 30, larg: 40 },
-  { src: "Aldemir Martins, acrílica sobre tela, 100x75cm, 1971.jpeg", artista: "Aldemir Martins", ano: 1971, tecnica: "Acrílica sobre tela", alt: 100, larg: 75, meio: "Pintura" },
+  // ---- Aldemir Martins ----
+  { src: "Aldemir Martins, cerâmicas.jpg", artista: "Aldemir Martins", titulo: "Cerâmicas", meio: "Cerâmica",
+    nota: "Conjunto de cinco peças.",
+    revisar: "Sem medida no nome do arquivo, e a foto mostra 5 peças — confirmar se é um lote único ou 5 obras separadas, e as medidas." },
   { src: "Aldemir Martins, escultura em chapa de aço e pintura automotiva, 75x60cm.jpeg", artista: "Aldemir Martins", tecnica: "Escultura em chapa de aço e pintura automotiva", alt: 75, larg: 60, meio: "Escultura" },
-  { src: "Clovis Graciano  50x35cm.jpeg", artista: "Clóvis Graciano", alt: 50, larg: 35 },
-  // Mesma obra em dois arquivos: "Dionisio Del Santo 55x80cm.jpg" (foto maior) e
-  // o arquivo com os dados ("…65x81cm, Bovino Cultura"). Fica a foto maior com
-  // os dados da outra; 65 × 81 cm é a medida correta — é a que bate com a
-  // proporção das duas fotos.
-  { src: "Dionisio Del Santo 55x80cm.jpg", artista: "Dionísio Del Santo", titulo: "Bovino Cultura", tecnica: "Acrílica sobre tela", alt: 65, larg: 81, meio: "Pintura" },
-  { src: "Efigenia de Deus 45x55cm.jpg", artista: "Efigênia de Deus", alt: 45, larg: 55 },
-  { src: "Efigênia de Deus 60x40cm.jpg", artista: "Efigênia de Deus", alt: 60, larg: 40 },
 
-  // "Flexor, óleo sobre tela, 1959…" e "Sansom flexor…" são fotos da MESMA obra.
-  // Fica a reprodução recortada (Sansom flexor), de melhor qualidade.
-  { src: "Sansom flexor 130x100cm.jpeg", artista: "Samson Flexor", ano: 1959, tecnica: "Óleo sobre tela", alt: 130, larg: 100, meio: "Pintura", nota: "Obra reproduzida no livro do artista; participou da exposição no MAM SP." },
+  // ---- Aldir Mendes de Souza ----
+  { src: "Aldir Mendes de Souza, têmpera sobre tela 100x100cm.jpeg", artista: "Aldir Mendes de Souza", tecnica: "Têmpera sobre tela", alt: 100, larg: 100, meio: "Pintura" },
 
-  { src: "Gabriela Brasileiro 100x150cm.jpg", artista: "Gabriela Brasileiro", alt: 100, larg: 150 },
-  { src: "Gabriela Brasileiro 160x120cm.jpg", artista: "Gabriela Brasileiro", alt: 160, larg: 120 },
-  { src: "Guyer Salles 100x140cm.jpg", artista: "Guyer Salles", alt: 100, larg: 140 },
-  { src: "Guyer Salles 60x80cm.jpg", artista: "Guyer Salles", alt: 60, larg: 80 },
-  { src: "Iberê Camargo, óleo sobre placa, 70x100cm, registrado na Fundação..jpeg", artista: "Iberê Camargo", tecnica: "Óleo sobre placa", alt: 70, larg: 100, meio: "Pintura", nota: "Obra registrada na Fundação Iberê Camargo." },
-  { src: "Inacio Rodrigues 30x30cm.jpg", artista: "Inácio Rodrigues", alt: 30, larg: 30 },
-  { src: "J A Silva  55x38cm.jpg", artista: "José A. Silva", alt: 55, larg: 38 },
-  { src: "Jorge Fonseca caixa de cetim 50x30x30cm.jpeg", artista: "Jorge Fonseca", tecnica: "Caixa de cetim", alt: 50, larg: 30, prof: 30, meio: "Escultura" },
-  { src: "Jorge dos Anjos aço cortem 220x40x40cm.jpeg", artista: "Jorge dos Anjos", tecnica: "Aço corten", alt: 220, larg: 40, prof: 40, meio: "Escultura" },
-  { src: "LUIZ SOLHA 120X160.jpg", artista: "Luiz Solha", alt: 120, larg: 160 },
-  { src: "LUIZ SOLHA 160X190cm.jpg", artista: "Luiz Solha", alt: 160, larg: 190 },
-  { src: "Luis Tomasello 35x35cm.jpg", artista: "Luis Tomasello", alt: 35, larg: 35 },
-  { src: "Manoel Martins 40x60cm.jpg", artista: "Manoel Martins", alt: 40, larg: 60 },
-  { src: "Mauricio Nogueira Lima 80x60cm.jpg", artista: "Maurício Nogueira Lima", alt: 80, larg: 60 },
-  { src: "Newton Mesquita 120x100cm.jpg", artista: "Newton Mesquita", alt: 120, larg: 100 },
-  { src: "Newton Mesquita 160x160cm.jpeg", artista: "Newton Mesquita", alt: 160, larg: 160 },
-  { src: "Paulo von Poser 120x50cm.jpg", artista: "Paulo von Poser", alt: 120, larg: 50 },
-  { src: "Pink Wainer 170x15.jpg", artista: "Pink Wainer", alt: 170, larg: 15, revisar: "A medida 170x15 do nome do arquivo não bate com a proporção da foto (quase quadrada)." },
-  { src: "Rosario Moreno 100x66cm.jpeg", artista: "Rosario Moreno", alt: 100, larg: 66 },
-  { src: "Sou Kit Gom 120x130.jpg", artista: "Sou Kit Gom", alt: 120, larg: 130 },
-  { src: "Sérgio Niculitcheff, 50x70cm.jpeg", artista: "Sérgio Niculitcheff", alt: 50, larg: 70 },
-  { src: "Sérgio Niculitcheff, a.s.t, 100x140cm.jpeg", artista: "Sérgio Niculitcheff", tecnica: "Acrílica sobre tela", alt: 100, larg: 140, meio: "Pintura" },
-  { src: "Sérgio Niculitcheff, a.s.t, 70x50cm.jpeg", artista: "Sérgio Niculitcheff", tecnica: "Acrílica sobre tela", alt: 70, larg: 50, meio: "Pintura" },
-  { src: "Sérgio Telles, o.s.t, nat.morta, 69x80cm.jpeg", artista: "Sérgio Telles", titulo: "Natureza-morta", tecnica: "Óleo sobre tela", alt: 69, larg: 80, meio: "Pintura" },
-  { src: "Victor Lema Rique, 160x190cm, 2012.jpg", artista: "Victor Lema Rique", ano: 2012, alt: 160, larg: 190 },
-  { src: "Wesley Duke lee 60x80cm.jpg", artista: "Wesley Duke Lee", alt: 60, larg: 80 },
-  { src: "Zorlini 65x57cm com moldura.jpg", artista: "Zorlini", alt: 65, larg: 57, nota: "Medida tomada com a moldura." },
-  { src: "leda catunda 152x180cm.jpeg", artista: "Leda Catunda", alt: 152, larg: 180 },
+  // ---- Alfredo Volpi ----
+  { src: "Alfredo Volpi, têmpera sobre tela, 67,5x135,5cm Inicio década de 1970.jpeg", artista: "Alfredo Volpi", tecnica: "Têmpera sobre tela", alt: 67.5, larg: 135.5, meio: "Pintura",
+    nota: "Início da década de 1970." },
 
-  // ---------------- Vendidas ----------------
-  { src: "vendido/Agostinho B. Freitas 60x80cm.jpeg", artista: "Agostinho Batista de Freitas", alt: 60, larg: 80, vendido: true },
-  { src: "vendido/Aldemir Martins 50x35cm.jpeg", artista: "Aldemir Martins", alt: 50, larg: 35, vendido: true },
-  { src: "vendido/Antônio Bandeira 32x24cm.jpeg", artista: "Antônio Bandeira", alt: 32, larg: 24, vendido: true },
-  { src: "vendido/Bruno Giorgi 89x40x10cm.jpeg", artista: "Bruno Giorgi", alt: 89, larg: 40, prof: 10, meio: "Escultura", vendido: true },
-  { src: "vendido/Di Cavalcanti 22x31cm.jpeg", artista: "Di Cavalcanti", alt: 22, larg: 31, vendido: true },
-  { src: "vendido/Di Cavalcanti, o.s.t, 38x55cm.jpeg", artista: "Di Cavalcanti", tecnica: "Óleo sobre tela", alt: 38, larg: 55, meio: "Pintura", vendido: true },
-  { src: "vendido/Fang 60x80cm.jpeg", artista: "Fang", alt: 60, larg: 80, vendido: true },
-  { src: "vendido/Ivald Granato 160x20cn.jpeg", artista: "Ivald Granato", alt: 20, larg: 160, vendido: true, revisar: "O nome do arquivo diz \u201C160x20cn\u201D; a foto é uma faixa horizontal, então foi registrada como 20 × 160 cm." },
-  { src: "vendido/Jorge dos Anjos relevo em aço cortem 115x115cm.jpeg", artista: "Jorge dos Anjos", tecnica: "Relevo em aço corten", alt: 115, larg: 115, meio: "Escultura", vendido: true },
-  { src: "vendido/José A Silva 65x90cm.jpeg", artista: "José A. Silva", alt: 65, larg: 90, vendido: true },
-  { src: "vendido/Marcelo Grassmann, sanguínea sobre papel, 45x65cm.jpeg", artista: "Marcelo Grassmann", tecnica: "Sanguínea sobre papel", alt: 45, larg: 65, meio: "Obra sobre papel", vendido: true },
-  { src: "vendido/Newton Mesquita1 160x160cm.jpeg", artista: "Newton Mesquita", alt: 160, larg: 160, vendido: true },
-  { src: "vendido/Paulo Roberto Leal, acrílica e colagem sobre papel, 30x17cm.jpeg", artista: "Paulo Roberto Leal", tecnica: "Acrílica e colagem sobre papel", alt: 30, larg: 17, meio: "Obra sobre papel", vendido: true },
-  { src: "vendido/Silvio Pinto, o.s.t, 51x58cm.jpeg", artista: "Silvio Pinto", tecnica: "Óleo sobre tela", alt: 51, larg: 58, meio: "Pintura", vendido: true },
-  { src: "vendido/Volpi 23x41cm.jpeg", artista: "Alfredo Volpi", alt: 23, larg: 41, vendido: true },
+  // ---- Amilcar de Castro ----
+  // "cortem" nos nomes de arquivo é o aço corten.
+  { src: "Amilcar de Castro, escultura em aço cortem 20x28cm.jpg", artista: "Amilcar de Castro", tecnica: "Escultura em aço corten", alt: 20, larg: 28, meio: "Escultura" },
+  { src: "Amilcar de Castro, escultura em aço cortem 40x60x5cm.png", artista: "Amilcar de Castro", tecnica: "Escultura em aço corten", alt: 40, larg: 60, prof: 5, meio: "Escultura" },
+  // Três litografias DIFERENTES (conferido nas imagens). O "(1) (2) (3)" é a
+  // numeração automática do Windows, não a numeração da tiragem.
+  { src: "Amilcar de Castro, gravura litografia, 70x100cm, Certificada no Projeto Amilcar de Castro  (1).jpg", artista: "Amilcar de Castro", tecnica: "Litografia", alt: 70, larg: 100, meio: "Gravura",
+    nota: "Certificada no Projeto Amilcar de Castro." },
+  { src: "Amilcar de Castro, gravura litografia, 70x100cm, Certificada no Projeto Amilcar de Castro  (2).jpg", artista: "Amilcar de Castro", tecnica: "Litografia", alt: 100, larg: 70, meio: "Gravura",
+    nota: "Certificada no Projeto Amilcar de Castro.",
+    revisar: "O nome do arquivo diz 70x100 como as outras duas, mas esta gravura é vertical — registrada como 100 × 70 cm. Conferir." },
+  { src: "Amilcar de Castro, gravura litografia, 70x100cm, Certificada no Projeto Amilcar de Castro  (3).jpg", artista: "Amilcar de Castro", tecnica: "Litografia", alt: 70, larg: 100, meio: "Gravura",
+    nota: "Certificada no Projeto Amilcar de Castro." },
+
+  // ---- Antônio Bandeira ----
+  // Três aquarelas diferentes (conferido nas imagens).
+  { src: "Antonio Bandeira, aquarela, 25x34cm 25x35cm.jpg", artista: "Antônio Bandeira", tecnica: "Aquarela", alt: 25, larg: 34, meio: "Obra sobre papel",
+    revisar: "O nome do arquivo traz DUAS medidas: 25x34cm e 25x35cm. Ficou a primeira. Conferir qual é a certa." },
+  { src: "Antonio Bandeira, aquarela, 25x35cm.jpg", artista: "Antônio Bandeira", tecnica: "Aquarela", alt: 25, larg: 35, meio: "Obra sobre papel" },
+  { src: "Antonio Bandeira, aquarela, 35x25cm.jpg", artista: "Antônio Bandeira", tecnica: "Aquarela", alt: 35, larg: 25, meio: "Obra sobre papel" },
+
+  // ---- Chen-Kong Fang ----
+  // Nos arquivos aparece "FANG" em caixa alta; "sobte" é "sobre".
+  { src: "Chen-Kong FANG, fruteira, óleo sobre tela, 35x43cm, 1959 copiar.jpg", artista: "Chen-Kong Fang", titulo: "Fruteira", ano: 1959, tecnica: "Óleo sobre tela", alt: 35, larg: 43, meio: "Pintura" },
+  { src: "Chen-Kong FANG, óleo sobre madeira, 120x125cm.png", artista: "Chen-Kong Fang", tecnica: "Óleo sobre madeira", alt: 120, larg: 125, meio: "Pintura" },
+  { src: "Chen-Kong FANG, óleo sobre tela, 32x20cm.jpeg", artista: "Chen-Kong Fang", tecnica: "Óleo sobre tela", alt: 32, larg: 20, meio: "Pintura" },
+  { src: "Chen-Kong FANG, óleo sobte tela sobre madeira 55x40cm.png", artista: "Chen-Kong Fang", tecnica: "Óleo sobre tela sobre madeira", alt: 55, larg: 40, meio: "Pintura" },
+
+  // ---- Claudio Tozzi ----
+  { src: "Claudio Tozzi, N.Y, óleo sobre tela sobre madeira, 100x150cm, década de 1980.jpeg", artista: "Claudio Tozzi", titulo: "N.Y", tecnica: "Óleo sobre tela sobre madeira", alt: 100, larg: 150, meio: "Pintura",
+    nota: "Década de 1980." },
+
+  // ---- Di Cavalcanti ----
+  { src: "Di Cavalcanti, óleo sobre tela, 55x65cm - Década de 1979.jpg", artista: "Di Cavalcanti", ano: 1979, tecnica: "Óleo sobre tela", alt: 55, larg: 65, meio: "Pintura",
+    revisar: "O nome do arquivo diz \"Década de 1979\" — 1979 é ano, não década. Registrado como ano de 1979; conferir se não é a década de 1970." },
+
+  // ---- Dionísio Del Santo ----
+  { src: "Dionisio Del Santo, óleo sobre tela, 55x80cm, Fazendinha 1983.JPG", artista: "Dionísio Del Santo", titulo: "Fazendinha", ano: 1983, tecnica: "Óleo sobre tela", alt: 55, larg: 80, meio: "Pintura",
+    revisar: "Esta MESMA foto estava antes no acervo como \"acrílica sobre tela, 65x81cm, Bovino Cultura\". A proporção da foto (1,25) fecha com 65×81 e não com 55×80. Conferir técnica, medida e título." },
+
+  // ---- Félix Toranzo ----
+  { src: "Félix Toranzo, acrílica sobre tela, Díptico 120x102cm (Cada).jpg", artista: "Félix Toranzo", tecnica: "Acrílica sobre tela", alt: 120, larg: 102, meio: "Pintura",
+    nota: "Díptico — a medida é de cada painel." },
+
+  // ---- Gabriela Brasileiro ----
+  // Três arquivos trazem "Brasilerio", que é erro de digitação.
+  { src: "Gabriela Brasileiro, acrílica sobre tela  120x160cm.JPG", artista: "Gabriela Brasileiro", tecnica: "Acrílica sobre tela", alt: 120, larg: 160, meio: "Pintura" },
+  { src: "Gabriela Brasilerio, acrílica sobre tela, 110x150cm.jpeg", artista: "Gabriela Brasileiro", tecnica: "Acrílica sobre tela", alt: 110, larg: 150, meio: "Pintura" },
+  { src: "Gabriela Brasilerio, acrílica sobre tela, 120x120cm.jpeg", artista: "Gabriela Brasileiro", tecnica: "Acrílica sobre tela", alt: 120, larg: 120, meio: "Pintura" },
+  { src: "Gabriela Brasilerio, acrílica sobre tela, 150x120cm.jpeg", artista: "Gabriela Brasileiro", tecnica: "Acrílica sobre tela", alt: 150, larg: 120, meio: "Pintura" },
+
+  // ---- Ianelli ----
+  { src: "Ianelli, têmpera sobre tela, 100x80cm - Década 1970.jpeg", artista: "Ianelli", tecnica: "Têmpera sobre tela", alt: 100, larg: 80, meio: "Pintura",
+    nota: "Década de 1970.",
+    revisar: "O arquivo traz só o sobrenome. Confirmar se é Arcangelo Ianelli ou Thomaz Ianelli." },
+
+  // ---- Iberê Camargo ----
+  // O arquivo traz "Carmargo".
+  { src: "Iberê Carmargo, óleo sobre cartão colado em madeira 70x100cm, reproduzido em catálogo da exposição do Artista.JPG", artista: "Iberê Camargo", tecnica: "Óleo sobre cartão colado em madeira", alt: 70, larg: 100, meio: "Pintura",
+    nota: "Reproduzida em catálogo de exposição do artista." },
+
+  // ---- Jorge dos Anjos ----
+  { src: "Jorge dos Anjos, escultura de aço cortem, 300x200cm.jpeg", artista: "Jorge dos Anjos", tecnica: "Escultura em aço corten", alt: 300, larg: 200, meio: "Escultura",
+    revisar: "As outras duas esculturas do artista têm três medidas (240x40x40 e 230x40x40); esta só tem duas. Falta a profundidade?" },
+  { src: "Jorge dos Anjos, escultura em aço cortem 240x40x40cm.jpeg", artista: "Jorge dos Anjos", tecnica: "Escultura em aço corten", alt: 240, larg: 40, prof: 40, meio: "Escultura" },
+  { src: "Jorge dos Anjos, escultura em aço cortem e tinta automotiva, 230x40x40cm.jpeg", artista: "Jorge dos Anjos", tecnica: "Escultura em aço corten e tinta automotiva", alt: 230, larg: 40, prof: 40, meio: "Escultura" },
+
+  // ---- Marcello Tomazelli ----
+  // Duas fotos da MESMA obra (conferido). Fica o recorte, que é a melhor
+  // reprodução; a foto na parede vai para _pendentes/fotos-duplicadas/.
+  { src: "Marcello Tomazelli, acrílica sobre tela, 110x160cm copiar.jpg", artista: "Marcello Tomazelli", tecnica: "Acrílica sobre tela", alt: 110, larg: 160, meio: "Pintura" },
+
+  // ---- Mira Schendel ----
+  { src: "Mira Schendel, óleo e ecoline sobre papel 50x70cm.JPG", artista: "Mira Schendel", tecnica: "Óleo e ecoline sobre papel", alt: 50, larg: 70, meio: "Obra sobre papel" },
+
+  // ---- Paulo Torres ----
+  { src: "Paulo Torres, acrílica sobre tela, 90x170cm.JPG", artista: "Paulo Torres", tecnica: "Acrílica sobre tela", alt: 90, larg: 170, meio: "Pintura" },
+
+  // ---- Rubens Matuck ----
+  { src: "Rubens Matuck, óleo sobre tela, Díptico, 100x160, 2000.png", artista: "Rubens Matuck", ano: 2000, tecnica: "Óleo sobre tela", alt: 100, larg: 160, meio: "Pintura",
+    nota: "Díptico.",
+    revisar: "A medida vem sem unidade no nome do arquivo e não diz se 100x160 é cada painel ou o conjunto." },
+
+  // ---- Samson Flexor ----
+  // O arquivo traz "Sansom" e "obra produzida no livro"; o certo é reproduzida,
+  // como constava antes.
+  { src: "Sansom Flexor, óleo sobre tela, 130x100cm 1959, obra produzida no livro do artista.jpg", artista: "Samson Flexor", ano: 1959, tecnica: "Óleo sobre tela", alt: 130, larg: 100, meio: "Pintura",
+    nota: "Reproduzida no livro do artista." },
+
+  // ---- Sérgio Niculitcheff ----
+  // Um arquivo traz "Niculiticheff". São três obras diferentes (conferido).
+  { src: "Sérgio Niculitcheff, acrílica sobre tela, 100x140cm 2001.jpeg", artista: "Sérgio Niculitcheff", ano: 2001, tecnica: "Acrílica sobre tela", alt: 100, larg: 140, meio: "Pintura" },
+  { src: "Sérgio Niculitcheff, acrílica sobre tela, 70x50cm 2001.jpeg", artista: "Sérgio Niculitcheff", ano: 2001, tecnica: "Acrílica sobre tela", alt: 70, larg: 50, meio: "Pintura" },
+  { src: "Sérgio Niculiticheff, óleo sobre tela, 100x140cm, 2001 -.png", artista: "Sérgio Niculitcheff", ano: 2001, tecnica: "Óleo sobre tela", alt: 100, larg: 140, meio: "Pintura" },
+
+  // ---- Sérgio Telles ----
+  // O arquivo traz "olé sobre placa".
+  { src: "Sérgio Telles, olé sobre placa 60x80cm.jpeg", artista: "Sérgio Telles", tecnica: "Óleo sobre placa", alt: 60, larg: 80, meio: "Pintura",
+    revisar: "Esta MESMA foto estava antes no acervo como \"óleo sobre tela, natureza-morta, 69x80cm\". Mudaram o suporte e a medida, e o título sumiu. Conferir." },
+
+  // ---- Victor Lema Rique ----
+  { src: "Victor Lema Riquê , acrilica sobre tela, 200x170cm, 1995 (rep Catalogo Nara Roesler).jpeg", artista: "Victor Lema Rique", ano: 1995, tecnica: "Acrílica sobre tela", alt: 200, larg: 170, meio: "Pintura",
+    nota: "Reproduzida no catálogo da Galeria Nara Roesler." },
+
+  // ---- Wesley Duke Lee ----
+  // O arquivo traz "Xarox" e "séria".
+  { src: "Wesley Duke Lee, Xarox colorido, séria N.Y 60x80cm.JPG", artista: "Wesley Duke Lee", titulo: "Série N.Y", tecnica: "Xerox colorido", alt: 60, larg: 80, meio: "Obra sobre papel" },
 ];
 
 // Fotos adicionais de obras que JÁ estão no catálogo (a mesma obra registrada
-// duas vezes nas pastas de origem). Vão para _pendentes/fotos-duplicadas/ em vez
+// duas vezes na pasta de origem). Vão para _pendentes/fotos-duplicadas/ em vez
 // de se misturarem com as imagens que ainda precisam de nome e medida.
 export const DUPLICADAS = [
-  "Agostinho Batista de Freitas 80x120cm.jpg",
-  "Dionísio Del Santo, acrílica sobre tela, 65x81cm, “Bovino Cultura”.jpeg",
-  "Flexor, óleo sobre tela, 1959, 130x100cm. Obra reproduzida no livro do artista, participou da exposição no MAM SP.jpeg",
+  "Marcello Tomazelli, acrílica sobre tela, 110x160cm.JPG",
 ];
