@@ -2,7 +2,7 @@
 
 import Icon from "./Icon";
 import { useLang } from "./LangProvider";
-import { INSTAGRAM_ARROBA, INSTAGRAM_URL } from "@/lib/contato";
+import { FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_ARROBA, INSTAGRAM_URL } from "@/lib/contato";
 
 interface ButtonProps {
   variant?: "primary" | "secondary" | "ghost";
@@ -21,13 +21,14 @@ export function Button({ variant = "primary", children, onClick, icon, type = "b
   );
 }
 
-// Só Instagram: o escritório não informou Facebook, e um ícone que leva a
-// lugar nenhum é pior do que não ter o ícone.
 export function SocialLinks({ className }: { className?: string }) {
   return (
     <div className={className || "social"}>
       <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label={`Instagram — ${INSTAGRAM_ARROBA}`}>
         <Icon name="instagram" size={18} />
+      </a>
+      <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label={`Facebook — ${FACEBOOK_NOME}`}>
+        <Icon name="facebook" size={18} />
       </a>
     </div>
   );

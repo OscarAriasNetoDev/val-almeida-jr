@@ -12,7 +12,7 @@ import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
 import { ARTISTS, ARTWORKS, I18N, MEDIUMS, artworkSrc, workCaption, workLabel } from "@/lib/data";
 import type { Artwork, Medium } from "@/lib/data";
-import { INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL } from "@/lib/contato";
+import { FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL } from "@/lib/contato";
 
 // O acervo ainda não registra obras vendidas, então o filtro aqui é por meio.
 // O selo "Vendida" e o recorte por disponibilidade continuam no código, presos
@@ -224,7 +224,11 @@ export default function HomePage() {
                 </h4>
                 <p>
                   <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                    {INSTAGRAM_NOME}
+                    Instagram · {INSTAGRAM_NOME}
+                  </a>
+                  <br />
+                  <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer">
+                    Facebook · {FACEBOOK_NOME}
                   </a>
                 </p>
               </div>

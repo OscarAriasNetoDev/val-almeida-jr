@@ -4,7 +4,7 @@ import Image from "next/image";
 import { SocialLinks } from "./ui";
 import { useLang } from "./LangProvider";
 import { asset } from "@/lib/data";
-import { ENDERECO, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL, TELEFONES } from "@/lib/contato";
+import { ENDERECO, FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL, TELEFONES } from "@/lib/contato";
 
 export default function Footer() {
   const { lang } = useLang();
@@ -57,8 +57,11 @@ export default function Footer() {
         <div>
           <h4>{pt ? "Redes" : "Social"}</h4>
           <p>
-            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-              {INSTAGRAM_NOME}
+            <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+              Instagram · {INSTAGRAM_NOME}
+            </a>
+            <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+              Facebook · {FACEBOOK_NOME}
             </a>
           </p>
           <SocialLinks className="ft-social" />
