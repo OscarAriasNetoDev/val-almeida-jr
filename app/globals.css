@@ -304,9 +304,15 @@ a { color: inherit; text-decoration: none; }
 .contact-social { display: flex; gap: 14px; }
 .contact-social a { color: var(--ink-2); display: flex; }
 .contact-social a:hover { color: var(--accent); }
-/* Deixou de ser um quadro morto escrito "mapa": agora leva ao Google Maps. */
-.map-strip { width: 100%; min-height: 280px; height: 100%; background: var(--paper-sunken); border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--ink-2); font: var(--text-caption); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
-.map-strip:hover { border-color: var(--hairline-strong); color: var(--accent); }
+/* Mapa embutido do Google. A dessaturação alinha o mapa aos neutros quentes da
+   página; ao passar o mouse ele volta à cor cheia, o que também sinaliza que
+   dá para arrastar e dar zoom ali dentro. */
+.map-embed { display: flex; flex-direction: column; width: 100%; height: 100%; min-height: 280px; }
+.map-embed iframe { flex: 1; width: 100%; min-height: 280px; border: 1px solid var(--hairline); background: var(--paper-sunken); filter: saturate(.45) contrast(.96); transition: filter var(--dur) var(--ease); }
+.map-embed:hover iframe { filter: none; }
+.map-embed > a { margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); font: var(--text-caption); letter-spacing: .12em; text-transform: uppercase; transition: color var(--dur-fast) var(--ease); }
+.map-embed > a:hover { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .map-embed iframe { transition: none; } }
 
 /* ============================================================
    ACERVO PAGE — busca aprimorada

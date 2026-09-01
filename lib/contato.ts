@@ -8,6 +8,26 @@ export const ENDERECO = {
   cep: "01303-060",
 };
 
+/**
+ * Coordenadas do endereço, obtidas pelo geocodificador do OpenStreetMap
+ * (Nominatim) e conferidas: número 139 e CEP 01303-060 batem.
+ *
+ * O mapa embutido usa as coordenadas, não o texto do endereço: com texto livre
+ * o Google abre um balão "Place info couldn't load" por cima do mapa, porque
+ * não tem um identificador de lugar para resolver.
+ */
+export const COORDENADAS = { lat: -23.549864, lng: -46.651373 };
+
+/**
+ * Mapa embutido, na forma sem chave de API (maps.google.com + output=embed).
+ * Não é a Maps Embed API oficial, que exigiria projeto no Google Cloud, cobrança
+ * habilitada e uma chave exposta no HTML de um site estático. Esta forma é
+ * antiga e estável, mas não é documentada — se um dia parar de responder, a
+ * troca é por este endereço do OpenStreetMap, que não precisa de chave:
+ * https://www.openstreetmap.org/export/embed.html?bbox=…&marker=lat,lng
+ */
+export const MAPS_EMBED_URL = `https://maps.google.com/maps?q=${COORDENADAS.lat},${COORDENADAS.lng}&z=17&output=embed`;
+
 /** Busca no Google Maps pelo endereço completo. */
 export const MAPS_URL =
   "https://www.google.com/maps/search/?api=1&query=" +

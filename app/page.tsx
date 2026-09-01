@@ -12,7 +12,7 @@ import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
 import { ARTISTS, ARTWORKS, I18N, MEDIUMS, artworkSrc, workCaption, workLabel } from "@/lib/data";
 import type { Artwork, Medium } from "@/lib/data";
-import { FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_URL } from "@/lib/contato";
+import { ENDERECO, FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_EMBED_URL, MAPS_URL } from "@/lib/contato";
 
 // O acervo ainda não registra obras vendidas, então o filtro aqui é por meio.
 // O selo "Vendida" e o recorte por disponibilidade continuam no código, presos
@@ -233,10 +233,21 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <a className="map-strip" href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-              <Icon name="map-pin" size={18} />
-              {pt ? "Ver no mapa" : "Open in maps"}
-            </a>
+            <div className="map-embed">
+              {/* loading="lazy": o mapa é o último bloco da página, não precisa
+                  concorrer com as obras no carregamento inicial. */}
+              <iframe
+                src={MAPS_EMBED_URL}
+                title={`${pt ? "Mapa" : "Map"} — ${ENDERECO.linha1}, ${ENDERECO.bairro}, ${ENDERECO.cidade}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                <Icon name="map-pin" size={14} />
+                {pt ? "Abrir no Google Maps" : "Open in Google Maps"}
+              </a>
+            </div>
           </div>
         </section>
       </main>
