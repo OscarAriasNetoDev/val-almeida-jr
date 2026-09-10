@@ -209,7 +209,7 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeAll: "Ver tudo",
     visit: "Agendar visita",
     heroEyebrow: "Escritório de arte · desde 1987",
-    heroTitle: "Arte contemporânea brasileira",
+    heroTitle: "Arte moderna e contemporânea",
     heroLead:
       "Uma seleção de obras e artistas reunida ao longo de mais de três décadas. A obra é a protagonista — o escritório, o intervalo de silêncio ao redor.",
     featuredWorks: "Acervo em destaque",
@@ -232,7 +232,7 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeAll: "See all",
     visit: "Book a visit",
     heroEyebrow: "Art office · since 1987",
-    heroTitle: "Brazilian contemporary art",
+    heroTitle: "Modern and contemporary art",
     heroLead:
       "A selection of works and artists assembled over more than three decades. The work is the protagonist — the office, the quiet interval around it.",
     featuredWorks: "Featured works",

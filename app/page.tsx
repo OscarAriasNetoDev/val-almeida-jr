@@ -5,14 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui";
+import { Button, SocialLinks } from "@/components/ui";
 import Icon from "@/components/Icon";
 import { ArtistCard, GalleryGrid } from "@/components/cards";
 import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
 import { ARTISTS, ARTWORKS, I18N, MEDIUMS, artworkSrc, workCaption, workLabel } from "@/lib/data";
 import type { Artwork, Medium } from "@/lib/data";
-import { ENDERECO, FACEBOOK_NOME, FACEBOOK_URL, INSTAGRAM_NOME, INSTAGRAM_URL, MAPS_EMBED_URL, MAPS_URL } from "@/lib/contato";
+import { ENDERECO, MAPS_EMBED_URL, MAPS_URL } from "@/lib/contato";
 
 // O acervo ainda não registra obras vendidas, então o filtro aqui é por meio.
 // O selo "Vendida" e o recorte por disponibilidade continuam no código, presos
@@ -109,8 +109,8 @@ export default function HomePage() {
             <div>
               <p>
                 {pt
-                  ? "Desde 1987 reunimos obras de artistas brasileiros contemporâneos — no tempo lento da galeria, onde a obra encontra quem a olha."
-                  : "Since 1987 we have gathered works by contemporary Brazilian artists — in the gallery’s slow time, where the work meets the one who looks."}
+                  ? "Desde 1987 reunimos obras de artistas brasileiros modernos e contemporâneos — no tempo lento da galeria, onde a obra encontra quem a olha."
+                  : "Since 1987 we have gathered works by modern and contemporary Brazilian artists — in the gallery’s slow time, where the work meets the one who looks."}
               </p>
             </div>
           </div>
@@ -222,15 +222,7 @@ export default function HomePage() {
                 <h4>
                   <Icon name="instagram" size={15} /> {pt ? "Redes" : "Social"}
                 </h4>
-                <p>
-                  <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-                    Instagram · {INSTAGRAM_NOME}
-                  </a>
-                  <br />
-                  <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer">
-                    Facebook · {FACEBOOK_NOME}
-                  </a>
-                </p>
+                <SocialLinks className="contact-social" />
               </div>
             </div>
             <div className="map-embed">

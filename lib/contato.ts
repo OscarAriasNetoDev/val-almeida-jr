@@ -41,16 +41,17 @@ export const TELEFONES = [
   { href: "tel:+5531988787858", texto: "+55 31 98878-7858" },
 ];
 
-// As duas URLs vieram com rastreio de compartilhamento ("?igsi=" no Instagram,
-// "?mibextid=" no Facebook), que não faz parte do endereço do perfil.
-//
-// O Facebook veio como link /share/1J7vWsFp1o/, que é um redirecionamento e
-// pode deixar de funcionar; seguindo o redirect, o perfil de verdade é
-// /val.almeidajr — é esse que fica gravado aqui.
-export const INSTAGRAM_URL = "https://www.instagram.com/valalmeidajrgaleria";
+// Instagram: URL usada exatamente como o cliente enviou, com o "?stkn=" no fim.
+// O caminho do perfil (/valalmeidajrgaleria) é o mesmo de antes e sempre apontou
+// para o lugar certo; "stkn" é o token de compartilhamento do Instagram. Fica
+// como veio porque foi pedido assim — se um dia o token expirar, o endereço sem
+// ele continua funcionando: https://www.instagram.com/valalmeidajrgaleria
+export const INSTAGRAM_URL = "https://www.instagram.com/valalmeidajrgaleria?stkn=ZDNlZDc0MzIxNw==";
 export const INSTAGRAM_NOME = "Val Almeida Jr";
 export const INSTAGRAM_ARROBA = "@valalmeidajrgaleria";
 
+// O Facebook veio como link /share/1J7vWsFp1o/, que é um redirecionamento e
+// pode deixar de funcionar; seguindo o redirect, o perfil é /val.almeidajr.
 export const FACEBOOK_URL = "https://www.facebook.com/val.almeidajr";
 export const FACEBOOK_NOME = "Val Almeida Jr";
 

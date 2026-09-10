@@ -5,11 +5,11 @@ import { LangProvider } from "@/components/LangProvider";
 export const metadata: Metadata = {
   title: "Val de Almeida Jr — escritório de arte",
   description:
-    "Escritório de arte dedicado à arte contemporânea brasileira desde 1987. Artistas, acervo, vídeos e contato.",
+    "Escritório de arte dedicado à arte moderna e contemporânea desde 1987. Artistas, acervo e contato.",
   metadataBase: new URL("https://valdealmeidajr.com.br"),
   openGraph: {
     title: "Val de Almeida Jr — escritório de arte",
-    description: "Arte contemporânea brasileira. Uma seleção reunida desde 1987.",
+    description: "Arte moderna e contemporânea. Uma seleção reunida desde 1987.",
     locale: "pt_BR",
     type: "website",
   },
