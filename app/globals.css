@@ -99,7 +99,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-section[id] { scroll-margin-top: 156px; }
+section[id] { scroll-margin-top: 146px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -132,11 +132,11 @@ a { color: inherit; text-decoration: none; }
    HEADER
    ============================================================ */
 .hd { position: sticky; top: 0; z-index: 50; background: rgba(250,248,244,.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--hairline); }
-.hd-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 136px; }
+.hd-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 126px; }
 .hd-logo { display: flex; align-items: center; height: 100%; cursor: pointer; background: none; border: none; padding: 0; }
-.hd-logo img { height: 86px; width: auto; }
+.hd-logo img { height: 76px; width: auto; }
 .hd-nav { display: flex; align-items: center; gap: 34px; }
-.hd-nav a, .hd-nav button { font: var(--text-small); color: var(--ink); position: relative; padding: 4px 0; transition: color var(--dur-fast) var(--ease); cursor: pointer; background: none; border: none; }
+.hd-nav a, .hd-nav button { font: var(--text-small); font-size: 1rem; color: var(--ink); position: relative; padding: 4px 0; transition: color var(--dur-fast) var(--ease); cursor: pointer; background: none; border: none; }
 .hd-nav a:hover, .hd-nav button:hover { color: var(--accent); }
 .hd-nav a.active, .hd-nav button.active { color: var(--ink); }
 .hd-nav a.active::after, .hd-nav button.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--accent); }
@@ -160,7 +160,7 @@ a { color: inherit; text-decoration: none; }
 .ft p, .ft a { font: var(--text-small); color: var(--ink-on-dark); margin: 0 0 6px; line-height: 1.7; }
 .ft a { cursor: pointer; transition: color var(--dur-fast) var(--ease); }
 .ft a:hover { color: #fff; }
-.ft-logo img { height: 96px; width: auto; margin-bottom: 18px; }
+.ft-logo img { height: 86px; width: auto; margin-bottom: 18px; }
 .ft-social { display: flex; gap: 14px; margin-top: 18px; }
 .ft-social a { color: var(--ink-on-dark-2); }
 .ft-social a:hover { color: #fff; }

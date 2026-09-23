@@ -210,7 +210,7 @@ export const I18N: Record<Lang, I18NEntry> = {
     heroTitle: "Arte moderna e contemporânea",
     heroLead:
       "Uma seleção de obras e artistas reunida ao longo de mais de três décadas. A obra é a protagonista — o escritório, o intervalo de silêncio ao redor.",
-    featuredWorks: "Acervo em destaque",
+    featuredWorks: "Acervo",
     featuredArtists: "Artistas do acervo",
     allFilter: "Todas",
     available: "Disponíveis",
@@ -232,7 +232,7 @@ export const I18N: Record<Lang, I18NEntry> = {
     heroTitle: "Modern and contemporary art",
     heroLead:
       "A selection of works and artists assembled over more than three decades. The work is the protagonist — the office, the quiet interval around it.",
-    featuredWorks: "Featured works",
+    featuredWorks: "Collection",
     featuredArtists: "Artists in the collection",
     allFilter: "All",
     available: "Available",
