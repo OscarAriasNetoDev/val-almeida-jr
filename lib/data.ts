@@ -183,7 +183,6 @@ interface I18NEntry {
   seeWorks: string;
   seeAll: string;
   visit: string;
-  heroEyebrow: string;
   heroTitle: string;
   heroLead: string;
   featuredWorks: string;
@@ -208,7 +207,6 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeWorks: "Ver obras",
     seeAll: "Ver tudo",
     visit: "Agendar visita",
-    heroEyebrow: "Escritório de arte · desde 1987",
     heroTitle: "Arte moderna e contemporânea",
     heroLead:
       "Uma seleção de obras e artistas reunida ao longo de mais de três décadas. A obra é a protagonista — o escritório, o intervalo de silêncio ao redor.",
@@ -231,7 +229,6 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeWorks: "See works",
     seeAll: "See all",
     visit: "Book a visit",
-    heroEyebrow: "Art office · since 1987",
     heroTitle: "Modern and contemporary art",
     heroLead:
       "A selection of works and artists assembled over more than three decades. The work is the protagonist — the office, the quiet interval around it.",

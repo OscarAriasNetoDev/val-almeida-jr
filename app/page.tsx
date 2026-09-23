@@ -12,7 +12,7 @@ import { Lightbox } from "@/components/modals";
 import { useLang } from "@/components/LangProvider";
 import { ARTISTS, ARTWORKS, I18N, MEDIUMS, artworkSrc, workCaption, workLabel } from "@/lib/data";
 import type { Artwork, Medium } from "@/lib/data";
-import { ENDERECO, MAPS_EMBED_URL, MAPS_URL } from "@/lib/contato";
+import { EMAIL, ENDERECO, MAPS_EMBED_URL, MAPS_URL } from "@/lib/contato";
 
 // O acervo ainda não registra obras vendidas, então o filtro aqui é por meio.
 // O selo "Vendida" e o recorte por disponibilidade continuam no código, presos
@@ -62,7 +62,6 @@ export default function HomePage() {
         {/* ---------- Hero ---------- */}
         <section className="container-wide home-hero">
           <div>
-            <div className="eyebrow">{t.heroEyebrow}</div>
             <h1 className="serif-title">{t.heroTitle}</h1>
             <p className="lead">{t.heroLead}</p>
             <div className="hero-actions">
@@ -102,25 +101,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ---------- Sobre — desde 1987 ---------- */}
-        <section className="about-band">
-          <div className="container-wide inner">
-            <div className="eyebrow">{pt ? "O escritório" : "The office"}</div>
-            <div>
-              <p>
-                {pt
-                  ? "Desde 1987 reunimos obras de artistas brasileiros modernos e contemporâneos — no tempo lento da galeria, onde a obra encontra quem a olha."
-                  : "Since 1987 we have gathered works by modern and contemporary Brazilian artists — in the gallery’s slow time, where the work meets the one who looks."}
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* ---------- Artistas ---------- */}
         <section id="artistas" className="container-wide sec">
           <div className="sec-head">
             <div>
-              <div className="eyebrow">{t.nav[0]}</div>
               <h2 className="serif-title">{t.featuredArtists}</h2>
             </div>
             <span className="count">
@@ -140,7 +124,6 @@ export default function HomePage() {
         <section id="acervo" className="container-wide sec">
           <div className="sec-head">
             <div>
-              <div className="eyebrow">{t.nav[1]}</div>
               <h2 className="serif-title">{t.featuredWorks}</h2>
             </div>
             <Link className="btn btn-ghost" href="/acervo">
@@ -172,7 +155,6 @@ export default function HomePage() {
         <section id="contato" className="container-wide sec">
           <div className="sec-head">
             <div>
-              <div className="eyebrow">{t.nav[2]}</div>
               <h2 className="serif-title">{pt ? "Contato" : "Contact"}</h2>
             </div>
           </div>
@@ -192,20 +174,22 @@ export default function HomePage() {
               </div>
               <div className="blk">
                 <h4>
-                  <Icon name="clock" size={15} /> {pt ? "Horários" : "Hours"}
+                  <Icon name="clock" size={15} /> {pt ? "Horário" : "Hours"}
                 </h4>
                 <p>
                   {pt ? "Segunda a sexta · 10h – 17h" : "Mon–Fri · 10am – 5pm"}
                   <br />
                   {pt ? "Visitas com agendamento" : "Visits by appointment"}
                 </p>
+                {/* As redes vêm logo abaixo do horário, sem título próprio. */}
+                <SocialLinks className="contact-social" />
               </div>
               <div className="blk">
                 <h4>
                   <Icon name="mail" size={15} /> {pt ? "E-mail" : "Email"}
                 </h4>
                 <p>
-                  <a href="mailto:contato@valdealmeidajr.com.br">contato@valdealmeidajr.com.br</a>
+                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
                 </p>
               </div>
               <div className="blk">
@@ -217,12 +201,6 @@ export default function HomePage() {
                   <br />
                   <a href="tel:+5531988787858">+55 31 98878-7858</a>
                 </p>
-              </div>
-              <div className="blk">
-                <h4>
-                  <Icon name="instagram" size={15} /> {pt ? "Redes" : "Social"}
-                </h4>
-                <SocialLinks className="contact-social" />
               </div>
             </div>
             <div className="map-embed">

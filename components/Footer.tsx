@@ -42,15 +42,13 @@ export default function Footer() {
           </p>
         </div>
         <div>
-          <h4>{pt ? "Horários" : "Hours"}</h4>
+          <h4>{pt ? "Horário" : "Hours"}</h4>
           <p>
             {pt ? "Segunda a sexta · 10h – 17h" : "Mon–Fri · 10am – 5pm"}
             <br />
             {pt ? "Visitas com agendamento" : "Visits by appointment"}
           </p>
-        </div>
-        <div>
-          <h4>{pt ? "Redes" : "Social"}</h4>
+          {/* Mesma ordem do contato: as redes vêm abaixo do horário. */}
           <SocialLinks className="ft-social" />
         </div>
       </div>

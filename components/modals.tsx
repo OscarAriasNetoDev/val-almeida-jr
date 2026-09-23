@@ -60,7 +60,6 @@ export function Lightbox({ works, index, setIndex, onClose, lang }: LightboxProp
           )}
         </div>
         <div className="lb-panel">
-          <span className="eyebrow">{t.nav[1]}</span>
           {/* O nome do artista + a medida são o rótulo da obra — não há título próprio. */}
           <h3 className="ti">{workLabel(work)}</h3>
           {work.sold && <span className="tag-sold static">{t.soldTag}</span>}

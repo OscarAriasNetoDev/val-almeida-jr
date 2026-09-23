@@ -55,6 +55,4 @@ export const INSTAGRAM_ARROBA = "@valalmeidajrgaleria";
 export const FACEBOOK_URL = "https://www.facebook.com/val.almeidajr";
 export const FACEBOOK_NOME = "Val Almeida Jr";
 
-// TODO: e-mail ainda é o fictício herdado do handoff — trocar pelo real antes
-// de o site sair da prévia.
-export const EMAIL = "contato@valdealmeidajr.com.br";
+export const EMAIL = "valgaleria@uol.com.br";

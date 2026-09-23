@@ -79,9 +79,6 @@ function AcervoContent() {
       <Header />
       <main>
         <section className="container-wide acervo-intro">
-          <div className="eyebrow" style={{ marginBottom: 14 }}>
-            {t.nav[1]}
-          </div>
           <h1 className="serif-title">{pt ? "Acervo completo" : "Full collection"}</h1>
           <p className="lead">
             {pt
