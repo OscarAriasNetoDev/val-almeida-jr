@@ -17,10 +17,13 @@
   --paper:        #FAF8F4;
   --surface:      #FFFFFF;
   --paper-sunken: #F2EFE9;
-  /* Pastel quase branco que separa uma seção da outra, alternando. Também é o
-     fundo do quadro do destaque, que antes usava o --paper-sunken e pesava
-     demais ao lado da obra. */
-  --paper-alt:    #FEFCF8;
+  /* Faixa que separa uma seção da outra, alternando. Também é o fundo do quadro
+     do destaque, que antes usava o --paper-sunken e pesava demais ao lado da
+     obra.
+     Branco puro: a página já está em 250,248,244, então clarear é a única
+     direção com folga. Escurecer daria mais contraste, mas encostaria no
+     --paper-sunken dos cartões de artista, que sumiriam dentro da faixa. */
+  --paper-alt:    #FFFFFF;
   --ink-surface:  #17170F;
   /* Grafite quente do rodapé. Antes ele usava o --ink-surface quase preto, o
      mesmo da faixa escura que saiu da home. */
