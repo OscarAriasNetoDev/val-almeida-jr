@@ -106,21 +106,23 @@ export default function HomePage() {
         </section>
 
         {/* ---------- Artistas ---------- */}
-        <section id="artistas" className="container-wide sec">
-          <div className="sec-head">
-            <div>
-              <h2 className="serif-title">{t.featuredArtists}</h2>
+        <section id="artistas" className="band-alt">
+          <div className="container-wide sec">
+            <div className="sec-head">
+              <div>
+                <h2 className="serif-title">{t.featuredArtists}</h2>
+              </div>
+              <span className="count">
+                {ARTISTS.length} {pt ? "artistas" : "artists"}
+              </span>
             </div>
-            <span className="count">
-              {ARTISTS.length} {pt ? "artistas" : "artists"}
-            </span>
-          </div>
-          <div className="grid-artists">
-            {ARTISTS.map((a) => (
-              <Link key={a.id} href={`/acervo?artista=${a.id}`} className="artist-link">
-                <ArtistCard artist={a} />
-              </Link>
-            ))}
+            <div className="grid-artists">
+              {ARTISTS.map((a) => (
+                <Link key={a.id} href={`/acervo?artista=${a.id}`} className="artist-link">
+                  <ArtistCard artist={a} />
+                </Link>
+              ))}
+              </div>
           </div>
         </section>
 
@@ -156,72 +158,74 @@ export default function HomePage() {
         </section>
 
         {/* ---------- Contato ---------- */}
-        <section id="contato" className="container-wide sec">
-          <div className="sec-head">
-            <div>
-              <h2 className="serif-title">{pt ? "Contato" : "Contact"}</h2>
+        <section id="contato" className="band-alt">
+          <div className="container-wide sec">
+            <div className="sec-head">
+              <div>
+                <h2 className="serif-title">{pt ? "Contato" : "Contact"}</h2>
+              </div>
             </div>
-          </div>
-          <div className="contact-grid">
-            <div className="contact-info">
-              <div className="blk">
-                <h4>
-                  <Icon name="map-pin" size={15} /> {pt ? "Endereço" : "Address"}
-                </h4>
-                <p>
-                  <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-                    Rua Visconde de Ouro Preto, 139 · Consolação
+            <div className="contact-grid">
+              <div className="contact-info">
+                <div className="blk">
+                  <h4>
+                    <Icon name="map-pin" size={15} /> {pt ? "Endereço" : "Address"}
+                  </h4>
+                  <p>
+                    <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                      Rua Visconde de Ouro Preto, 139 · Consolação
+                      <br />
+                      São Paulo · SP · 01303-060
+                    </a>
+                  </p>
+                </div>
+                <div className="blk">
+                  <h4>
+                    <Icon name="clock" size={15} /> {pt ? "Horário" : "Hours"}
+                  </h4>
+                  <p>
+                    {pt ? "Segunda a sexta · 10h – 17h" : "Mon–Fri · 10am – 5pm"}
                     <br />
-                    São Paulo · SP · 01303-060
-                  </a>
-                </p>
+                    {pt ? "Visitas com agendamento" : "Visits by appointment"}
+                  </p>
+                  {/* As redes vêm logo abaixo do horário, sem título próprio. */}
+                  <SocialLinks className="contact-social" />
+                </div>
+                <div className="blk">
+                  <h4>
+                    <Icon name="mail" size={15} /> {pt ? "E-mail" : "Email"}
+                  </h4>
+                  <p>
+                    <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                  </p>
+                </div>
+                <div className="blk">
+                  <h4>
+                    <Icon name="phone" size={15} /> {pt ? "Telefone" : "Phone"}
+                  </h4>
+                  <p>
+                    <a href="tel:+551130883240">+55 11 3088-3240</a>
+                    <br />
+                    <a href="tel:+5531988787858">+55 31 98878-7858</a>
+                  </p>
+                </div>
               </div>
-              <div className="blk">
-                <h4>
-                  <Icon name="clock" size={15} /> {pt ? "Horário" : "Hours"}
-                </h4>
-                <p>
-                  {pt ? "Segunda a sexta · 10h – 17h" : "Mon–Fri · 10am – 5pm"}
-                  <br />
-                  {pt ? "Visitas com agendamento" : "Visits by appointment"}
-                </p>
-                {/* As redes vêm logo abaixo do horário, sem título próprio. */}
-                <SocialLinks className="contact-social" />
+              <div className="map-embed">
+                {/* loading="lazy": o mapa é o último bloco da página, não precisa
+                    concorrer com as obras no carregamento inicial. */}
+                <iframe
+                  src={MAPS_EMBED_URL}
+                  title={`${pt ? "Mapa" : "Map"} — ${ENDERECO.linha1}, ${ENDERECO.bairro}, ${ENDERECO.cidade}`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
+                  <Icon name="map-pin" size={14} />
+                  {pt ? "Abrir no Google Maps" : "Open in Google Maps"}
+                </a>
               </div>
-              <div className="blk">
-                <h4>
-                  <Icon name="mail" size={15} /> {pt ? "E-mail" : "Email"}
-                </h4>
-                <p>
-                  <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-                </p>
               </div>
-              <div className="blk">
-                <h4>
-                  <Icon name="phone" size={15} /> {pt ? "Telefone" : "Phone"}
-                </h4>
-                <p>
-                  <a href="tel:+551130883240">+55 11 3088-3240</a>
-                  <br />
-                  <a href="tel:+5531988787858">+55 31 98878-7858</a>
-                </p>
-              </div>
-            </div>
-            <div className="map-embed">
-              {/* loading="lazy": o mapa é o último bloco da página, não precisa
-                  concorrer com as obras no carregamento inicial. */}
-              <iframe
-                src={MAPS_EMBED_URL}
-                title={`${pt ? "Mapa" : "Map"} — ${ENDERECO.linha1}, ${ENDERECO.bairro}, ${ENDERECO.cidade}`}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer">
-                <Icon name="map-pin" size={14} />
-                {pt ? "Abrir no Google Maps" : "Open in Google Maps"}
-              </a>
-            </div>
           </div>
         </section>
       </main>

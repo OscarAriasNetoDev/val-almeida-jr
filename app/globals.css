@@ -17,6 +17,10 @@
   --paper:        #FAF8F4;
   --surface:      #FFFFFF;
   --paper-sunken: #F2EFE9;
+  /* Pastel quase branco que separa uma seção da outra, alternando. Também é o
+     fundo do quadro do destaque, que antes usava o --paper-sunken e pesava
+     demais ao lado da obra. */
+  --paper-alt:    #FEFCF8;
   --ink-surface:  #17170F;
   /* Grafite quente do rodapé. Antes ele usava o --ink-surface quase preto, o
      mesmo da faixa escura que saiu da home. */
@@ -193,6 +197,9 @@ a { color: inherit; text-decoration: none; }
    SECTION HEADERS
    ============================================================ */
 .sec { padding-block: var(--space-8); }
+/* Uma seção sim, outra não. A cor vai na casca de largura total, não na
+   <section>, que o container-wide limita a 1600px. */
+.band-alt { background: var(--paper-alt); }
 .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: var(--space-6); }
 .sec-head h2 { font: var(--text-h2); margin: 0; }
 
@@ -285,7 +292,7 @@ a { color: inherit; text-decoration: none; }
 .hero-feature { display: flex; flex-direction: column; }
 /* Proporção fixa porque o destaque é sorteado a cada visita: o quadro não pode
    mudar de tamanho. "contain" evita recortar obras em paisagem ou retrato. */
-.hero-feature .frame { width: 100%; aspect-ratio: 1/1; background: var(--paper-sunken); border: 1px solid var(--hairline); position: relative; overflow: hidden; cursor: pointer; padding: 0; }
+.hero-feature .frame { width: 100%; aspect-ratio: 1/1; background: var(--paper-alt); border: 1px solid var(--hairline); position: relative; overflow: hidden; cursor: pointer; padding: 0; }
 .hero-feature .frame img { object-fit: contain; padding: 6%; animation: fade var(--dur-slow) var(--ease-out); }
 /* Reserva a altura da legenda para ela não empurrar o layout ao chegar. */
 .hero-feature .cap { margin-top: 16px; min-height: 22px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
