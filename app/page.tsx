@@ -63,7 +63,11 @@ export default function HomePage() {
         <section className="container-wide home-hero">
           <div>
             <h1 className="serif-title">{t.heroTitle}</h1>
-            <p className="lead">{t.heroLead}</p>
+            <div className="lead">
+              {t.heroLead.map((paragrafo) => (
+                <p key={paragrafo}>{paragrafo}</p>
+              ))}
+            </div>
             <div className="hero-actions">
               <Button variant="primary" icon="arrow-right" onClick={() => scrollToId("acervo")}>
                 {t.nav[1]}

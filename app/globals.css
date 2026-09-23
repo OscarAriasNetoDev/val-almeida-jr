@@ -278,7 +278,9 @@ a { color: inherit; text-decoration: none; }
 .home-hero { display: grid; grid-template-columns: 1.04fr .96fr; gap: var(--space-9); align-items: center; padding-block: var(--space-9); }
 .home-hero .eyebrow { margin-bottom: 26px; }
 .home-hero h1 { font: var(--text-display); letter-spacing: -0.02em; margin: 0 0 30px; max-width: 13ch; }
-.home-hero .lead { font: var(--text-lead); color: var(--ink-2); max-width: 46ch; margin-bottom: 38px; }
+.home-hero .lead { font: var(--text-lead); color: var(--ink-2); max-width: 52ch; margin-bottom: 38px; }
+.home-hero .lead p { margin: 0 0 16px; }
+.home-hero .lead p:last-child { margin-bottom: 0; }
 .home-hero .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 .hero-feature { display: flex; flex-direction: column; }
 /* Proporção fixa porque o destaque é sorteado a cada visita: o quadro não pode

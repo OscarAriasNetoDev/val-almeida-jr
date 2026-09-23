@@ -184,7 +184,8 @@ interface I18NEntry {
   seeAll: string;
   visit: string;
   heroTitle: string;
-  heroLead: string;
+  /** Texto de abertura, um item por parágrafo. */
+  heroLead: string[];
   featuredWorks: string;
   featuredArtists: string;
   allFilter: string;
@@ -208,8 +209,11 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeAll: "Ver tudo",
     visit: "Agendar visita",
     heroTitle: "Arte moderna e contemporânea",
-    heroLead:
-      "Uma seleção de obras e artistas reunida ao longo de mais de três décadas. A obra é a protagonista — o escritório, o intervalo de silêncio ao redor.",
+    heroLead: [
+      "No mercado desde 1987, o escritório Val de Almeida Jr. mantém um importante acervo com nomes da arte moderna e contemporânea. E sempre atento a novos e jovens talentos.",
+      "Além de pinturas e desenhos, temos um grande acervo de gravuras dos principais artistas brasileiros.",
+      "Realizamos catalogação e avaliação de coleções públicas e privadas.",
+    ],
     featuredWorks: "Acervo",
     featuredArtists: "Artistas do acervo",
     allFilter: "Todas",
@@ -230,8 +234,11 @@ export const I18N: Record<Lang, I18NEntry> = {
     seeAll: "See all",
     visit: "Book a visit",
     heroTitle: "Modern and contemporary art",
-    heroLead:
-      "A selection of works and artists assembled over more than three decades. The work is the protagonist — the office, the quiet interval around it.",
+    heroLead: [
+      "In business since 1987, the Val de Almeida Jr. office holds a significant collection of names from modern and contemporary art — and keeps a close eye on new and young talent.",
+      "Beyond paintings and drawings, we hold a large collection of prints by leading Brazilian artists.",
+      "We carry out the cataloguing and appraisal of public and private collections.",
+    ],
     featuredWorks: "Collection",
     featuredArtists: "Artists in the collection",
     allFilter: "All",
