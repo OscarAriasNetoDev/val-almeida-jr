@@ -383,7 +383,7 @@ export const ARTWORKS: Artwork[] = [
   { id: "tuneu-70x50-3", artist: "tuneu", artistName: "Tuneu", title: null, year: null, technique: "Gravura", h: 70, w: 50, ratio: 0.738, medium: "Gravura", sold: false },
   { id: "tuneu-70x50-4", artist: "tuneu", artistName: "Tuneu", title: null, year: null, technique: "Gravura", h: 70, w: 50, ratio: 0.72, medium: "Gravura", sold: false },
   { id: "tuneu-70x50-5", artist: "tuneu", artistName: "Tuneu", title: null, year: null, technique: "Gravura", h: 70, w: 50, ratio: 0.709, medium: "Gravura", sold: false },
-  { id: "tuneu", artist: "tuneu", artistName: "Tuneu", title: null, year: null, technique: "Gravura", ratio: 1.026, medium: "Gravura", sold: false, review: "Sem medida no nome do arquivo." },
+  { id: "tuneu-70x70", artist: "tuneu", artistName: "Tuneu", title: null, year: null, technique: "Gravura", h: 70, w: 70, ratio: 1.026, medium: "Gravura", sold: false },
   { id: "vicente-kutka-70x100", artist: "vicente-kutka", artistName: "Vicente Kutka", title: null, year: null, technique: "Gravura", h: 70, w: 100, ratio: 1.436, medium: "Gravura", sold: false },
   { id: "vicente-kutka-70x100-2", artist: "vicente-kutka", artistName: "Vicente Kutka", title: null, year: null, technique: "Gravura", h: 70, w: 100, ratio: 1.46, medium: "Gravura", sold: false },
   { id: "vicente-kutka-70x100-3", artist: "vicente-kutka", artistName: "Vicente Kutka", title: null, year: null, technique: "Gravura", h: 70, w: 100, ratio: 1.452, medium: "Gravura", sold: false },
