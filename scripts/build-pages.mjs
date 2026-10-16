@@ -8,10 +8,14 @@
 //   3. escreve out/.nojekyll — sem esse arquivo o GitHub Pages passa o site
 //      pelo Jekyll, que ignora pastas começadas em underscore e derruba todo
 //      o /_next/ (CSS e JS). O site sairia sem estilo nenhum.
+//   4. escreve out/CNAME quando há domínio próprio configurado. O GitHub Pages
+//      lê esse arquivo a cada publicação; sem ele o domínio é desligado no
+//      primeiro publish, porque o branch gh-pages é reescrito por inteiro.
 
 import { spawnSync } from "node:child_process";
 import { rmSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
+import { DOMINIO } from "../next.config.mjs";
 
 const OUT = path.join(process.cwd(), "out");
 
@@ -30,4 +34,9 @@ if (!existsSync(OUT)) {
 }
 
 writeFileSync(path.join(OUT, ".nojekyll"), "");
-console.log("\nout/ pronto para o GitHub Pages (.nojekyll incluído)");
+
+if (DOMINIO) writeFileSync(path.join(OUT, "CNAME"), `${DOMINIO}\n`);
+
+console.log(
+  `\nout/ pronto para o GitHub Pages (.nojekyll${DOMINIO ? ` + CNAME ${DOMINIO}` : ""})`
+);

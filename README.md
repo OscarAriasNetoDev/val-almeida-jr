@@ -39,6 +39,36 @@ Três detalhes que essa configuração exige (todos já resolvidos, mas bom sabe
 
 O `npm run dev` e o `npm run build` continuam sem `basePath` — ele só liga com a variável `GITHUB_PAGES=true`, que o `build:pages` define.
 
+## Ligar um domínio próprio
+
+Hoje o site vive em `oscarariasnetodev.github.io/val-almeida-jr/`. Com domínio próprio ele passa a viver na raiz do domínio, e o `basePath` deixa de existir.
+
+**1. Registrar o domínio.** Em https://registro.br (`.com.br` custa ~R$40/ano e exige CPF ou CNPJ). O ideal é registrar no CNPJ do escritório, não no do desenvolvedor — assim o cliente é dono do próprio endereço.
+
+**2. Apontar o DNS**, no painel do registro.br:
+
+| Tipo | Nome | Valor |
+|---|---|---|
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | oscarariasnetodev.github.io. |
+
+Esses são os endereços do GitHub Pages, conferidos em https://api.github.com/meta. A propagação leva de minutos a algumas horas.
+
+**3. Preencher o domínio no código.** Em `next.config.mjs`:
+
+```js
+export const DOMINIO = "valalmeidajr.com.br";
+```
+
+**4. Publicar:** `npm run publicar-preview`.
+
+O `basePath` some sozinho e o build passa a escrever `out/CNAME`. Esse arquivo é obrigatório e precisa ser reescrito a cada publicação: o branch `gh-pages` é recriado por inteiro toda vez, e sem o CNAME o GitHub desliga o domínio. O `build:pages` cuida disso.
+
+**5. No GitHub**, em Settings → Pages, confirme o domínio e marque *Enforce HTTPS* (o certificado é gratuito e sai sozinho em alguns minutos).
+
 ## Como rodar
 
 ```bash
