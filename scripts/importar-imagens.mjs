@@ -13,7 +13,10 @@ import sharp from "sharp";
 import { readdirSync, statSync, mkdirSync, copyFileSync, existsSync, rmSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import path from "node:path";
-import { CATALOGO, DUPLICADAS } from "./catalogo.mjs";
+import { CATALOGO, DUPLICADAS, GRAVURAS } from "./catalogo.mjs";
+
+// As gravuras entram junto: sao catalogadas pelo nome do arquivo, nao a mao.
+const TUDO = [...CATALOGO, ...GRAVURAS];
 
 const ORIGEM = "c:/Programação/Val/imagem";
 // Varre a raiz e qualquer subpasta que exista — a organização da pasta de
@@ -42,7 +45,7 @@ mkdirSync(DESTINO, { recursive: true });
 const usados = new Set();
 const linhas = [];
 
-for (const obra of CATALOGO) {
+for (const obra of TUDO) {
   const full = path.join(ORIGEM, obra.src);
   if (!existsSync(full)) throw new Error(`arquivo do catálogo não encontrado: ${obra.src}`);
   usados.add(hashDe(full));

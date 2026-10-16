@@ -22,6 +22,9 @@ type Filtro = "todas" | Medium;
 /** Quantas obras a home mostra antes de mandar para o acervo completo. */
 const DESTAQUES = 12;
 
+/** Artistas visíveis antes de abrir a lista inteira. São 73 no acervo. */
+const ARTISTAS_VISIVEIS = 12;
+
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
@@ -35,6 +38,7 @@ export default function HomePage() {
   const { lang } = useLang();
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+  const [todosArtistas, setTodosArtistas] = useState(false);
   const t = I18N[lang];
   const pt = lang === "pt";
 
@@ -51,6 +55,8 @@ export default function HomePage() {
     { key: "todas", label: t.allFilter },
     ...MEDIUMS.map((m) => ({ key: m as Filtro, label: m })),
   ];
+
+  const artistasVisiveis = todosArtistas ? ARTISTS : ARTISTS.slice(0, ARTISTAS_VISIVEIS);
 
   const filtradas = ARTWORKS.filter((w) => filtro === "todas" || w.medium === filtro);
   const destaques = filtradas.slice(0, DESTAQUES);
@@ -117,12 +123,21 @@ export default function HomePage() {
               </span>
             </div>
             <div className="grid-artists">
-              {ARTISTS.map((a) => (
+              {artistasVisiveis.map((a) => (
                 <Link key={a.id} href={`/acervo?artista=${a.id}`} className="artist-link">
                   <ArtistCard artist={a} />
                 </Link>
               ))}
+            </div>
+            {!todosArtistas && (
+              <div className="carregar-mais">
+                <button className="btn btn-secondary" onClick={() => setTodosArtistas(true)}>
+                  {pt
+                    ? `Ver todos os ${ARTISTS.length} artistas`
+                    : `See all ${ARTISTS.length} artists`}
+                </button>
               </div>
+            )}
           </div>
         </section>
 

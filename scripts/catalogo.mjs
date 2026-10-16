@@ -149,3 +149,61 @@ export const CATALOGO = [
 export const DUPLICADAS = [
   "Marcello Tomazelli, acrílica sobre tela, 110x160cm.JPG",
 ];
+
+// ============================================================================
+// GRAVURAS
+// ============================================================================
+// 295 arquivos numa pasta propria, todos gravuras, com nome no padrao
+// "Artista 50x35cm (2).jpg". Volume demais para digitar entrada por entrada, e
+// o padrao e uniforme o bastante para ler do nome do arquivo.
+//
+// O "(N)" e numeracao automatica do Windows, nao da tiragem: sao obras
+// diferentes do mesmo artista no mesmo tamanho (conferido por hash — nenhum
+// arquivo e igual a outro). Varios nomes terminam em "ok", marca de conferido
+// de quem organizou a pasta.
+//
+// Medida: altura x largura, mesma convencao do resto do acervo.
+
+import { readdirSync, statSync } from "node:fs";
+import path from "node:path";
+
+const PASTA_GRAVURAS = "GRAVURAS";
+const ORIGEM_GRAVURAS = path.join("c:/Programação/Val/imagem", PASTA_GRAVURAS);
+
+// Grafias a unificar. A da direita e a que vai para o site.
+const NOME_CANONICO = {
+  "Aldemir Mrtins": "Aldemir Martins",
+  Baneson: "Beneson",
+  "Gregorio Gruber": "Gregório Gruber",
+  "Herton roitman": "Herton Roitman",
+  Jussara: "Jussara Age",
+  "jussara Age": "Jussara Age",
+  "Paulo von poser": "Paulo von Poser",
+  "Pink Wainer": "Pinky Wainer",
+  "Rubens Ianeli": "Rubens Ianelli",
+  "Stephan Doitshinoff": "Stephan Doitschinoff",
+  tuneu: "Tuneu",
+};
+
+// nome -> medida. Aceita "cm" opcional, decimal com virgula, e ignora o que
+// vier depois (o "(2)", o "ok", numeros soltos).
+const RE_GRAVURA = /^(.*?)\s*(\d{1,4}(?:,\d+)?)\s*[x×X]\s*(\d{1,4}(?:,\d+)?)\s*(?:cm)?/i;
+const numero = (s) => Number(String(s).replace(",", "."));
+
+export const GRAVURAS = readdirSync(ORIGEM_GRAVURAS)
+  .filter((f) => statSync(path.join(ORIGEM_GRAVURAS, f)).isFile() && /\.(jpe?g|png)$/i.test(f))
+  .sort((a, b) => a.localeCompare(b, "pt"))
+  .map((arquivo) => {
+    const base = arquivo.replace(/\.(jpe?g|png)$/i, "");
+    const m = base.match(RE_GRAVURA);
+    const cru = (m ? m[1] : base).replace(/\s+/g, " ").trim();
+    const artista = NOME_CANONICO[cru] ?? cru;
+    return {
+      src: `${PASTA_GRAVURAS}/${arquivo}`,
+      artista,
+      tecnica: "Gravura",
+      meio: "Gravura",
+      ...(m ? { alt: numero(m[2]), larg: numero(m[3]) } : {}),
+      ...(m ? {} : { revisar: "Sem medida no nome do arquivo." }),
+    };
+  });

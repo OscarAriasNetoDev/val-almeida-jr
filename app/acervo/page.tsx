@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,6 +17,13 @@ type SortKey = "artista" | "maior" | "acervo";
 type Status = "todas" | "disponiveis" | "vendidas";
 type Filtro = "todas" | Medium;
 
+/**
+ * Obras por lote. Com 335 no acervo, jogar tudo de uma vez faria o visitante
+ * baixar dezenas de megabytes antes de ver qualquer coisa — no GitHub Pages as
+ * imagens são servidas no tamanho original, sem otimização.
+ */
+const POR_LOTE = 60;
+
 function AcervoContent() {
   const { lang } = useLang();
   const pt = lang === "pt";
@@ -31,6 +38,7 @@ function AcervoContent() {
   const [meio, setMeio] = useState<Filtro>("todas");
   const [sort, setSort] = useState<SortKey>("artista");
   const [lightbox, setLightbox] = useState<{ works: Artwork[]; index: number } | null>(null);
+  const [lote, setLote] = useState(1);
 
   const works = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -53,6 +61,13 @@ function AcervoContent() {
       return 0; // ordem do acervo
     });
   }, [query, artist, status, meio, sort]);
+
+  // Mudou o filtro, volta ao primeiro lote: senão o visitante continuaria num
+  // lote alto sobre uma lista que encolheu.
+  useEffect(() => setLote(1), [query, artist, status, meio, sort]);
+
+  const visiveis = works.slice(0, lote * POR_LOTE);
+  const faltam = works.length - visiveis.length;
 
   const wlabel = t.works[works.length === 1 ? 0 : 1];
   const limpar = query !== "" || artist !== "" || status !== "todas" || meio !== "todas";
@@ -143,7 +158,7 @@ function AcervoContent() {
               ))}
             </div>
             <span className="count">
-              {works.length} {wlabel}
+              {visiveis.length === works.length ? works.length : `${visiveis.length} / ${works.length}`} {wlabel}
               {limpar && (
                 <button
                   className="reset"
@@ -161,7 +176,24 @@ function AcervoContent() {
           </div>
 
           {works.length > 0 ? (
-            <GalleryGrid works={works} cols={4} onOpen={(w) => setLightbox({ works, index: works.indexOf(w) })} />
+            <>
+              {/* O lightbox recebe só o que está visível, para a seta "próxima"
+                  não saltar para uma obra que ainda não carregou. */}
+              <GalleryGrid
+                works={visiveis}
+                cols={4}
+                onOpen={(w) => setLightbox({ works: visiveis, index: visiveis.indexOf(w) })}
+              />
+              {faltam > 0 && (
+                <div className="carregar-mais">
+                  <button className="btn btn-secondary" onClick={() => setLote((n) => n + 1)}>
+                    {pt
+                      ? `Carregar mais ${Math.min(faltam, POR_LOTE)} de ${faltam}`
+                      : `Load ${Math.min(faltam, POR_LOTE)} more of ${faltam}`}
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="empty-state">
               <div className="t">{pt ? "Nenhuma obra encontrada" : "No works found"}</div>
